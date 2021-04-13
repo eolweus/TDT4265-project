@@ -91,6 +91,13 @@ def train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1):
 def acc_metric(predb, yb):
     return (predb.argmax(dim=1) == yb.cuda()).float().mean()
 
+def dice_score(predb, yb):
+    predflat = predb.argmax(dim=1).view(-1)
+    yflat = yb.view(-1)
+    intersection = (predflat * yflat).sum()
+    
+    return (2 * intersection) / (predflat.sum() + yflat.sum())
+
 def batch_to_img(xb, idx):
     img = np.array(xb[idx,0:3])
     return img.transpose((1,2,0))
@@ -116,7 +123,7 @@ def main ():
     mp.use('TkAgg', force=True)
 
     #load the training data
-    base_path = Path('/home/gkiss/Data/CAMUS_resized')
+    base_path = Path('./home/gkiss/Data/CAMUS_resized')
     data = DatasetLoader(base_path/'train_gray', 
                         base_path/'train_gt')
     print(len(data))
@@ -143,7 +150,7 @@ def main ():
     opt = torch.optim.Adam(unet.parameters(), lr=learn_rate)
 
     #do some training
-    train_loss, valid_loss = train(unet, train_data, valid_data, loss_fn, opt, acc_metric, epochs=epochs_val)
+    train_loss, valid_loss = train(unet, train_data, valid_data, loss_fn, opt, dice_score, epochs=epochs_val)
 
     #plot training and validation losses
     if visual_debug:
