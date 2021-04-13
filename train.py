@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib as mp
 import matplotlib.pyplot as plt
 import time
+import sklearn.metrics
 
 from pathlib import Path
 import torch
@@ -20,7 +21,8 @@ def train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1):
     train_loss, valid_loss = [], []
 
     best_acc = 0.0
-
+    lowest_val_loss = np.inf
+    es_stop_counter = 0
     for epoch in range(epochs):
         print('Epoch {}/{}'.format(epoch, epochs - 1))
         print('-' * 10)
@@ -43,7 +45,6 @@ def train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1):
                 x = x.cuda()
                 y = y.cuda()
                 step += 1
-
                 # forward pass
                 if phase == 'train':
                     # zero the gradients
@@ -82,14 +83,36 @@ def train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1):
             print('-' * 10)
 
             train_loss.append(epoch_loss) if phase=='train' else valid_loss.append(epoch_loss)
+            # Adding early stopping (Gulle)
+            if not phase=='train':
+                if epoch_loss < lowest_val_loss:
+                        lowest_val_loss = epoch_loss
+                        es_stop_counter = 0
 
-    time_elapsed = time.time() - start
-    print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))    
+                if es_stop_counter >= 3:
+                    print("Early stopping at epoch", epoch)
+                    time_elapsed = time.time() - start
+                    print('Time elapsed: {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)) 
+                    return train_loss, valid_loss 
+
+                es_stop_counter += 1
+
+        time_elapsed = time.time() - start
+        print('Time elapsed: {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))    
     
     return train_loss, valid_loss    
 
 def acc_metric(predb, yb):
     return (predb.argmax(dim=1) == yb.cuda()).float().mean()
+
+def dice_score(predb, yb):
+
+    predflat = predb.argmax(dim=1).view(-1)
+    yflat = yb.view(-1)
+    intersection = (predflat * yflat).sum()
+    
+    return (2 * intersection) / (predflat.sum() + yflat.sum())
+
 
 def batch_to_img(xb, idx):
     img = np.array(xb[idx,0:3])
@@ -113,10 +136,11 @@ def main ():
     learn_rate = 0.01
 
     #sets the matplotlib display backend (most likely not needed)
-    mp.use('TkAgg', force=True)
+    #mp.use('TkAgg', force=True)
 
     #load the training data
-    base_path = Path('/home/gkiss/Data/CAMUS_resized')
+    cluster_path = '../../../../work/datasets/medical_project/CAMUS_resized'
+    base_path = Path(cluster_path)
     data = DatasetLoader(base_path/'train_gray', 
                         base_path/'train_gt')
     print(len(data))
@@ -143,7 +167,7 @@ def main ():
     opt = torch.optim.Adam(unet.parameters(), lr=learn_rate)
 
     #do some training
-    train_loss, valid_loss = train(unet, train_data, valid_data, loss_fn, opt, acc_metric, epochs=epochs_val)
+    train_loss, valid_loss = train(unet, train_data, valid_data, loss_fn, opt, dice_score, epochs=epochs_val)
 
     #plot training and validation losses
     if visual_debug:

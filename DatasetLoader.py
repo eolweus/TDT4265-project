@@ -56,4 +56,4 @@ class DatasetLoader(Dataset):
         arr = 256*self.open_as_array(idx)
         
         return Image.fromarray(arr.astype(np.uint8), 'RGB')
-    
+
