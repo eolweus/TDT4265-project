@@ -14,14 +14,10 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs, check
     end = time.time()
     logger = logging.getLogger("U.trainer")
     logger.info("Start training ...")
-    meters = MetricLogger()
     
     train_loss, valid_loss = [], []
-
-    summary_writer = torch.utils.tensorboard.SummaryWriter(
-        log_dir=os.path.join("outputs", 'tf_logs'))
     
-    start_epoch = arguments["epoch"]
+    start_epoch = arguments["epoch"] # load start epoch
     
     best_acc = 0.0
     lowest_val_loss = np.inf
@@ -78,10 +74,8 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs, check
 
                 running_acc  += acc*dataloader.batch_size
                 running_loss += loss*dataloader.batch_size 
-                meters.update(total_loss=loss)
                 batch_time = time.time() - end
                 end = time.time()
-                meters.update(time=batch_time)
 
                 if step % 100 == 0:
                     # clear_output(wait=True)
@@ -98,58 +92,24 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs, check
 
             train_loss.append(epoch_loss) if phase=='train' else valid_loss.append(epoch_loss)
             
-            # Adding early stopping (Gulle)
+            # Added early stopping (Gulle)
             if not phase=='train':
                 if epoch_loss < lowest_val_loss:
                         lowest_val_loss = epoch_loss
                         es_stop_counter = 0
 
-                if es_stop_counter >= 3:
+                if es_stop_counter >= 3: 
                     print("Early stopping at epoch", epoch)
                     time_elapsed = time.time() - start
                     print('Time elapsed: {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)) 
                     return train_loss, valid_loss 
 
                 es_stop_counter += 1
-                
-        """        
+
+        
+        ### save model every second epoch
         if epoch % 2 == 0:
-            eta_seconds = meters.time.global_avg * (epochs - epoch)
-            eta_string = str(datetime.timedelta(seconds=int(eta_seconds)))
-            lr = optimizer.param_groups[0]['lr']
-            to_log = [
-                f"iter: {iteration:06d}",
-                f"lr: {lr:.5f}",
-                f'{meters}',
-                f"eta: {eta_string}",
-            ]
-            if torch.cuda.is_available():
-                mem = round(torch.cuda.max_memory_allocated() / 1024.0 / 1024.0)
-                to_log.append(f'mem: {mem}M')
-            logger.info(meters.delimiter.join(to_log))
-            global_step = iteration
-            summary_writer.add_scalar(
-                'losses/total_loss', loss, global_step=global_step)
-            for loss_name, loss_item in loss_dict.items():
-                summary_writer.add_scalar(
-                    'losses/{}'.format(loss_name), loss_item,
-                    global_step=global_step)
-            summary_writer.add_scalar(
-                'lr', optimizer.param_groups[0]['lr'],
-                global_step=global_step)
-        """
-        if epoch % 2 == 0:
-            checkpointer.save("model_{:06d}".format(epoch), **arguments)
-        """
-        if epoch % 3 == 0:
-            eval_results = do_evaluation(cfg, model, iteration=iteration)
-            for eval_result, dataset in zip(eval_results, cfg.DATASETS.TEST):
-                write_metric(
-                    eval_result['metrics'], 'metrics/' + dataset,summary_writer, iteration)
-            model.train()  # *IMPORTANT*: change to train mode after eval.
-         """       
-                
-                
+            checkpointer.save("model_{:06d}".format(epoch), **arguments)     
 
         time_elapsed = time.time() - start_training_time
         print('Time elapsed: {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))    

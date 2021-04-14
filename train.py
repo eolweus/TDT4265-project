@@ -21,20 +21,22 @@ from Unet2D import Unet2D
 def train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1):
     model.cuda()
     
-    ####
+    ### Setup for checkpointing
+    save_folder = "outputs"
     logger = logging.getLogger('U.trainer')
     arguments = {"epoch": 0, "step": 0}
     save_to_disk = True
     checkpointer = CheckPointer(
-        model, optimizer, "outputs", save_to_disk, logger,
+        model, optimizer, save_folder, save_to_disk, logger,
         )
-    extra_checkpoint_data = checkpointer.load()
-    arguments.update(extra_checkpoint_data)
+    extra_checkpoint_data = checkpointer.load() # Load last checkpoint
+    arguments.update(extra_checkpoint_data) 
     ####
     
+    # The trainer has been moved to trainer.py
     train_loss, valid_loss = do_train(model,train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs, checkpointer, arguments)
     return train_loss, valid_loss
-    
+
 
 def acc_metric(predb, yb):
     return (predb.argmax(dim=1) == yb.cuda()).float().mean()
