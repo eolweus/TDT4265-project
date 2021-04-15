@@ -84,7 +84,7 @@ def main ():
     learn_rate = 0.01
 
     # sets the matplotlib display backend (most likely not needed)
-    # mp.use('TkAgg', force=True)
+    mp.use('TkAgg', force=True)
 
     #load the training data
     base_path = Path(DATA_BASE_PATH)

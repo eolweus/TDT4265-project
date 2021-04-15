@@ -7,27 +7,20 @@ from PIL import Image, ImageOps
 
 #load data from a folder
 class DatasetLoader(Dataset):
-    def __init__(self, gray_dir, gt_dir, rotate=None,  pytorch=True):
+    def __init__(self, gray_dir, gt_dir, pytorch=True):
         super().__init__()
         
         # Loop through the files in red folder and combine, into a dictionary, the other bands
-        if gt_dir:
-            self.files = [self.combine_files(f, gt_dir) for f in gray_dir.iterdir() if not f.is_dir()]
+        self.files = [self.combine_files(f, gt_dir) for f in gray_dir.iterdir() if not f.is_dir()]
         self.pytorch = pytorch
         
-    def combine_files(self, gray_file: Path, gt_dir, correct_image=True):
+    def combine_files(self, gray_file: Path, gt_dir):
         
-        if correct_image:
-            files = {'gray': gray_file + '.mhd', 
-                    'gt': gray_file + '_gt.mhd'}
-
-        else:
-            files = {'gray': gray_file, 
-                    'gt': gt_dir/gray_file.name.replace('gray', 'gt')}
+        files = {'gray': gray_file, 
+                 'gt': gt_dir/gray_file.name.replace('gray', 'gt')}
 
         return files
-
-        
+       
                                        
     def __len__(self):
         #legth of all files to be loaded
@@ -51,18 +44,11 @@ class DatasetLoader(Dataset):
         raw_mask = np.where(raw_mask>100, 1, 0)
         
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
-
-    def rotate_image(self, idx):
-        flipped = idx.flip(2)
-        return flipped
     
     def __getitem__(self, idx):
         #get the image and mask as arrays
         x = torch.tensor(self.open_as_array(idx, invert=self.pytorch), dtype=torch.float32)
         y = torch.tensor(self.open_mask(idx, add_dims=False), dtype=torch.torch.int64)
-
-        if self.flip:
-           x, y = self.rotate_image(x), self.rotate_image(y)
         
         return x, y
     
