@@ -15,6 +15,13 @@ Your training images should be seperated into the following structure
 
 IMAGE_BASE_PATH=your_image_base_path
 
+for cybelle this is:
+../../../../work/datasets/medical_project/CAMUS_resized
+
+for local Erling uses:
+./home/gkiss/Data/CAMUS_resized
+
+
 To install the python-decouple package please use the following command
 
 conda install -c conda-forge python-decouple
