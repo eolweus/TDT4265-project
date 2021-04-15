@@ -17,6 +17,11 @@ from torch import nn
 from DatasetLoader import DatasetLoader
 from Unet2D import Unet2D
 
+from decouple import config
+
+DATA_BASE_PATH=config('IMAGE_BASE_PATH')
+
+
 
 def train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1):
     model.cuda()
@@ -50,6 +55,13 @@ def dice_score(predb, yb):
     return (2 * intersection) / (predflat.sum() + yflat.sum())
 
 
+def dice_score(predb, yb):
+    predflat = predb.argmax(dim=1).view(-1)
+    yflat = yb.view(-1)
+    intersection = (predflat * yflat).sum()
+    
+    return (2 * intersection) / (predflat.sum() + yflat.sum())
+
 def batch_to_img(xb, idx):
     img = np.array(xb[idx,0:3])
     return img.transpose((1,2,0))
@@ -71,12 +83,11 @@ def main ():
     #learning rate
     learn_rate = 0.01
 
-    #sets the matplotlib display backend (most likely not needed)
-    #p.use('TkAgg', force=True)
+    # sets the matplotlib display backend (most likely not needed)
+    # mp.use('TkAgg', force=True)
 
     #load the training data
-    cluster_path = '../../../../work/datasets/medical_project/CAMUS_resized'
-    base_path = Path(cluster_path)
+    base_path = Path(DATA_BASE_PATH)
     data = DatasetLoader(base_path/'train_gray', 
                         base_path/'train_gt')
     print(len(data))
