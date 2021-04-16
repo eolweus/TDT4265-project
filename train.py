@@ -14,13 +14,15 @@ import torch
 from torch.utils.data import Dataset, DataLoader, sampler
 from torch import nn
 
-from DatasetLoader import DatasetLoader
+from DatasetLoader import DatasetLoader, TTELoader, ResizedLoader
 from Unet2D import Unet2D
 
 from decouple import config
 
-DATA_BASE_PATH=config('IMAGE_BASE_PATH')
-
+TTE_BASE_PATH=config('TTE_BASE_PATH')
+TTE_FULL_BASE_PATH=config('TTE_FULL_BASE_PATH')
+TTE_TEST_BASE_PATH=config('TTE_FULL_TEST_BASE_PATH')
+TEE_BASE_PATH=config('TEE_BASE_PATH')
 
 
 def train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1):
@@ -84,16 +86,21 @@ def main ():
     learn_rate = 0.01
 
     # sets the matplotlib display backend (most likely not needed)
-    mp.use('TkAgg', force=True)
+    # mp.use('TkAgg', force=True)
 
-    #load the training data
-    base_path = Path(DATA_BASE_PATH)
-    data = DatasetLoader(base_path/'train_gray', 
-                        base_path/'train_gt')
+    # base_path = Path(TTE_BASE_PATH)
+    # data = ResizedLoader(base_path)
+
+    base_path = Path(TTE_FULL_BASE_PATH)
+    data = TTELoader(base_path)
+
     print(len(data))
 
+    train_partition = 2*len(data)//3
+    val_partition = len(data)-train_partition
+
     #split the training dataset and initialize the data loaders
-    train_dataset, valid_dataset = torch.utils.data.random_split(data, (300, 150))
+    train_dataset, valid_dataset = torch.utils.data.random_split(data, (train_partition, val_partition))
     train_data = DataLoader(train_dataset, batch_size=bs, shuffle=True)
     valid_data = DataLoader(valid_dataset, batch_size=bs, shuffle=True)
 
