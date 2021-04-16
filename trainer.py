@@ -6,8 +6,8 @@ import time
 import torch
 import torch.utils.tensorboard
 import numpy as np
-import config as cfg
-    
+import configs as cfg
+
 
 def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, epochs, checkpointer, arguments):
     start_training_time = time.time()
@@ -36,7 +36,7 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, epochs, chec
                 dataloader = valid_dl
 
             running_loss = 0.0
-            running_acc = 0.0
+            running_Dice = 0.0
 
             step = 0
             
@@ -71,7 +71,7 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, epochs, chec
                         loss = loss_fn(outputs, y.long())
 
                 # stats - whatever is the phase
-                Dice = Dice_fn(outputs, y)
+                Dice = dice_fn(outputs, y)
 
                 running_Dice  += Dice*dataloader.batch_size
                 running_loss += loss*dataloader.batch_size 

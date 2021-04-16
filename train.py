@@ -5,6 +5,7 @@ import matplotlib as mp
 import matplotlib.pyplot as plt
 import time
 import sklearn.metrics
+import pathlib
 from utils.checkpoint import CheckPointer
 from utils.logger import setup_logger
 from trainer import do_train
@@ -12,14 +13,18 @@ from pathlib import Path
 import torch
 from torch.utils.data import Dataset, DataLoader, sampler
 from torch import nn
-import configs as cfg
+from configs import cfg
 
 from DatasetLoader import DatasetLoader
 from Unet2D import Unet2D
 
-from decouple import config
 
-DATA_BASE_PATH=config('IMAGE_BASE_PATH')
+# +
+#from decouple import config
+
+# +
+#DATA_BASE_PATH=config('IMAGE_BASE_PATH')
+# -
 
 def do_evaluation(data, model, dice_fn):
     running_dice = 0
@@ -64,13 +69,6 @@ def dice_score(predb, yb):
     return (2 * intersection) / (predflat.sum() + yflat.sum())
 
 
-def dice_score(predb, yb):
-    predflat = predb.argmax(dim=1).view(-1)
-    yflat = yb.view(-1)
-    intersection = (predflat * yflat).sum()
-    
-    return (2 * intersection) / (predflat.sum() + yflat.sum())
-
 def batch_to_img(xb, idx):
     img = np.array(xb[idx,0:3])
     return img.transpose((1,2,0))
@@ -88,18 +86,21 @@ def main ():
     
     
     # sets the matplotlib display backend (most likely not needed)
-    mp.use('TkAgg', force=True)
+    #mp.use('TkAgg', force=True)
 
     #load the training data
-    base_path = Path(DATA_BASE_PATH)
+    cluster_path = '../../../../../work/datasets/medical_project/CAMUS_resized'
+    #Path(DATA_BASE_PATH)
+    base_path = Path(cluster_path)
     data = DatasetLoader(base_path/'train_gray', 
                         base_path/'train_gt')
+    
 
     #split the training dataset and initialize the data loaders
     train_val_dataset, test_dataset = torch.utils.data.random_split(data, (450 - cfg.TEST_SIZE, cfg.TEST_SIZE))
     train_dataset, validation_dataset = torch.utils.data.random_split(train_val_dataset, (450 - cfg.TEST_SIZE - cfg.VALIDATION_SIZE, cfg.VALIDATION_SIZE))
     train_data = DataLoader(train_dataset, batch_size=cfg.BATCH_SIZE, shuffle=True)
-    valid_data = DataLoader(valid_dataset, batch_size=cfg.BATCH_SIZE, shuffle=True)
+    valid_data = DataLoader(validation_dataset, batch_size=cfg.BATCH_SIZE, shuffle=True)
     test_data = DataLoader(test_dataset, batch_size=cfg.BATCH_SIZE, shuffle=True)
 
     if cfg.VISUAL_DEBUG:
