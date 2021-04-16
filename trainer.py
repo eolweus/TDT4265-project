@@ -6,14 +6,15 @@ import time
 import torch
 import torch.utils.tensorboard
 import numpy as np
-from utils.metric_logger import MetricLogger
+import config as cfg
+    
 
-
-def do_train(model,train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs, checkpointer, arguments):
+def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, epochs, checkpointer, arguments):
     start_training_time = time.time()
     end = time.time()
     logger = logging.getLogger("U.trainer")
     logger.info("Start training ...")
+    
     
     train_loss, valid_loss = [], []
     
@@ -70,24 +71,26 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs, check
                         loss = loss_fn(outputs, y.long())
 
                 # stats - whatever is the phase
-                acc = acc_fn(outputs, y)
+                Dice = Dice_fn(outputs, y)
 
-                running_acc  += acc*dataloader.batch_size
+                running_Dice  += Dice*dataloader.batch_size
                 running_loss += loss*dataloader.batch_size 
                 batch_time = time.time() - end
                 end = time.time()
 
                 if step % 100 == 0:
                     # clear_output(wait=True)
-                    print('Current step: {}  Loss: {}  Acc: {}  AllocMem (Mb): {}'.format(step, loss, acc, torch.cuda.memory_allocated()/1024/1024))
+                    print('Current step: {}  Loss: {}  Dice: {}  AllocMem (Mb): {}'.format(step, loss, dice, torch.cuda.memory_allocated()/1024/1024))
                     # print(torch.cuda.memory_summary())
+                    
+                
 
             epoch_loss = running_loss / len(dataloader.dataset)
-            epoch_acc = running_acc / len(dataloader.dataset)
+            epoch_acc = running_Dice / len(dataloader.dataset)
 
             print('Epoch {}/{}'.format(epoch, epochs - 1))
             print('-' * 10)
-            print('{} Loss: {:.4f} Acc: {}'.format(phase, epoch_loss, epoch_acc))
+            print('{} Loss: {:.4f} Dice: {}'.format(phase, epoch_loss, epoch_Dice))
             print('-' * 10)
 
             train_loss.append(epoch_loss) if phase=='train' else valid_loss.append(epoch_loss)
@@ -109,7 +112,8 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs, check
         
         ### save model every second epoch
         if epoch % 2 == 0:
-            checkpointer.save("model_{:06d}".format(epoch), **arguments)     
+            checkpointer.save("model_{:06d}".format(epoch), **arguments)  
+        
 
         time_elapsed = time.time() - start_training_time
         print('Time elapsed: {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))    
