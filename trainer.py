@@ -71,9 +71,9 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, epochs, chec
                         loss = loss_fn(outputs, y.long())
 
                 # stats - whatever is the phase
-                Dice = dice_fn(outputs, y)
+                dice = dice_fn(outputs, y)
 
-                running_Dice  += Dice*dataloader.batch_size
+                running_dice  += dice*dataloader.batch_size
                 running_loss += loss*dataloader.batch_size 
                 batch_time = time.time() - end
                 end = time.time()
@@ -103,7 +103,7 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, epochs, chec
 
                 if es_stop_counter >= 3: 
                     print("Early stopping at epoch", epoch)
-                    time_elapsed = time.time() - start
+                    time_elapsed = time.time() - start_training_time
                     print('Time elapsed: {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)) 
                     return train_loss, valid_loss 
 

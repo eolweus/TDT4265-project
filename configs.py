@@ -8,6 +8,6 @@ cfg.EPOCHS = 50
 cfg.LEARN_RATE = 0.01
 
 
-# total data = 450
-cfg.TEST_SIZE = 70
-cfg.VALIDATION_SIZE = 110
+# total train data = 450
+cfg.TEST_SIZE = 50
+cfg.VALIDATION_SIZE = 150

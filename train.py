@@ -28,6 +28,7 @@ from Unet2D import Unet2D
 
 def do_evaluation(data, model, dice_fn):
     running_dice = 0
+    model.train(False)
     for x, y in data:
         x = x.cuda()
         y = y.cuda()
@@ -94,7 +95,6 @@ def main ():
     base_path = Path(cluster_path)
     data = DatasetLoader(base_path/'train_gray', 
                         base_path/'train_gt')
-    
 
     #split the training dataset and initialize the data loaders
     train_val_dataset, test_dataset = torch.utils.data.random_split(data, (450 - cfg.TEST_SIZE, cfg.TEST_SIZE))
@@ -102,7 +102,7 @@ def main ():
     train_data = DataLoader(train_dataset, batch_size=cfg.BATCH_SIZE, shuffle=True)
     valid_data = DataLoader(validation_dataset, batch_size=cfg.BATCH_SIZE, shuffle=True)
     test_data = DataLoader(test_dataset, batch_size=cfg.BATCH_SIZE, shuffle=True)
-
+    
     if cfg.VISUAL_DEBUG:
         fig, ax = plt.subplots(1,2)
         ax[0].imshow(data.open_as_array(150))
@@ -125,7 +125,7 @@ def main ():
     # Evaluate network
     logger.info('Start evaluating...')
     torch.cuda.empty_cache()  # speed up evaluating after training finished
-    do_evaluation(test_data, model, dice_fn)
+    do_evaluation(test_data, unet, dice_score)
 
     #plot training and validation losses
     if cfg.VISUAL_DEBUG:
