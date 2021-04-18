@@ -40,6 +40,7 @@ def do_evaluation(data, model, dice_fn):
     print('-' * 10)
     print('Test Dice: {}'.format(avg_dice))
     print('-' * 10)
+    return avg_dice
 
 
 def start_train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1):
@@ -83,8 +84,8 @@ def main ():
     #create logger
     output_dir = pathlib.Path("outputs")
     output_dir.mkdir(exist_ok=True, parents=True)
-    logger = setup_logger("SSD", output_dir)
-    
+    logger = setup_logger("U", "logs")
+    logger.info("Loaded configuration file {}".format(cfg))
     
     # sets the matplotlib display backend (most likely not needed)
     #mp.use('TkAgg', force=True)
@@ -119,13 +120,15 @@ def main ():
     loss_fn = nn.CrossEntropyLoss()
     opt = torch.optim.Adam(unet.parameters(), lr=cfg.LEARN_RATE)
 
-    #do some training
+    #do some training 
+    logger.info("network: {}".format(unet._dict_))
     train_loss, valid_loss = start_train(unet, train_data, valid_data, loss_fn, opt, dice_score, epochs=cfg.EPOCHS)
     
     # Evaluate network
     logger.info('Start evaluating...')
     torch.cuda.empty_cache()  # speed up evaluating after training finished
-    do_evaluation(test_data, unet, dice_score)
+    result = do_evaluation(test_data, model, dice_fn)
+    logger.info("Evaluation result: {}".format(result))
 
     #plot training and validation losses
     if cfg.VISUAL_DEBUG:
