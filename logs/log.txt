@@ -229,3 +229,101 @@ VISUAL_DEBUG: True
 2021-04-19 09:02:42,498 U.trainer INFO: No checkpoint found.
 2021-04-19 09:02:42,501 U.trainer INFO: Start training ...
 2021-04-19 09:06:06,320 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-19 09:12:11,671 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-19 09:14:19,312 U.trainer INFO: Saving checkpoint to outputs/model_000004.pth
+2021-04-19 09:17:12,112 U.trainer INFO: Saving checkpoint to outputs/model_000006.pth
+2021-04-19 09:20:59,019 U.trainer INFO: Saving checkpoint to outputs/model_000008.pth
+2021-04-19 09:25:36,680 U.trainer INFO: Saving checkpoint to outputs/model_000010.pth
+2021-04-19 09:27:39,669 U INFO: Start evaluating...
+2021-04-19 09:36:58,206 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-19 09:38:24,946 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-19 09:38:30,904 U INFO: Unet2D(
+  (conv1): Sequential(
+    (0): Conv2d(1, 32, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3))
+    (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(32, 32, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3))
+    (4): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (conv2): Sequential(
+    (0): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (conv3): Sequential(
+    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (conv4): Sequential(
+    (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (upconv4): Sequential(
+    (0): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+  (upconv3): Sequential(
+    (0): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+  (upconv2): Sequential(
+    (0): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(32, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+  (upconv1): Sequential(
+    (0): Conv2d(64, 2, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(2, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(2, 2, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(2, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(2, 2, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+)
+2021-04-19 09:38:33,291 U.trainer INFO: Loading checkpoint from outputs/model_000010.pth
+2021-04-19 09:38:33,322 U.trainer INFO: Loading optimizer from outputs/model_000010.pth
+2021-04-19 09:38:33,344 U.trainer INFO: Start training ...
+2021-04-19 09:41:45,016 U.trainer INFO: Saving checkpoint to outputs/model_000010.pth
+2021-04-19 09:48:05,421 U INFO: Start evaluating...
+2021-04-19 09:48:29,212 U INFO: Evaluation result: 1.0049656629562378

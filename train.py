@@ -26,7 +26,7 @@ from Unet2D import Unet2D
 #DATA_BASE_PATH=config('IMAGE_BASE_PATH')
 # -
 
-def do_evaluation(data, model, dice_fn):
+def do_evaluation(data, model, dice_fn, dataloader):
     running_dice = 0
     model.train(False)
     for x, y in data:
@@ -69,6 +69,24 @@ def dice_score(predb, yb):
     intersection = (predflat * yflat).sum()
     
     return (2 * intersection) / (predflat.sum() + yflat.sum())
+
+
+#### fosskokt, skal se om alt er reiktig
+def dice_multiclass(predb, yb, smooth=1e5):
+    batch_size = predb.shape[0]
+    n_classes = predb.shape[1]
+    dice_scores = np.zeros((n_classes, batch_size))
+    for batch in range(batch_size):
+        pred = predb[batch, :, :, :]
+        target_flat = to_cuda(yb)[batch, :, :].view(-1)
+        # Ignore IoU for background class ("0")
+        for cls in range(1,n_classes):  # This goes from 1:n_classes-1 -> class "0" is ignored
+            pred_class_flat = pred[cls, :, :].view(-1)
+            intersection = (pred_cls * target).sum()
+            dice[cls, batch] = dice[cls,batch] + ((2 * intersection + smooth) / (pred_cls.sum() + target.sum() + smooth)) #.item()
+
+    dice_scores = np.mean(dice, axis=1)
+    return np.mean(dice_scores), list(dice_scores)
 
 
 def batch_to_img(xb, idx):
@@ -114,8 +132,10 @@ def main ():
     print (xb.shape, yb.shape)
 
     # build the Unet2D with one channel as input and 2 channels as output
+    
     unet = Unet2D(1,2)
-
+    logger.info(unet)
+    
     #loss function and optimizer
     loss_fn = nn.CrossEntropyLoss()
     opt = torch.optim.Adam(unet.parameters(), lr=cfg.LEARN_RATE)
@@ -126,7 +146,7 @@ def main ():
     # Evaluate network
     logger.info('Start evaluating...')
     torch.cuda.empty_cache()  # speed up evaluating after training finished
-    result = do_evaluation(test_data, unet, dice_score)
+    result = do_evaluation(test_data, unet, dice_score, test_data)
     logger.info("Evaluation result: {}".format(result))
 
     #plot training and validation losses
