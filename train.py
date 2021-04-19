@@ -33,7 +33,7 @@ def do_evaluation(data, model, dice_fn):
         x = x.cuda()
         y = y.cuda()
         outputs = model(x)
-        Dice = Dice_fn(outputs, y)
+        Dice = dice_fn(outputs, y)
         running_dice  += Dice*data.batch_size
     avg_dice = running_dice / len(dataloader.dataset)
     print("Run results")
@@ -126,7 +126,7 @@ def main ():
     # Evaluate network
     logger.info('Start evaluating...')
     torch.cuda.empty_cache()  # speed up evaluating after training finished
-    result = do_evaluation(test_data, unet, dice_fn)
+    result = do_evaluation(test_data, unet, dice_score)
     logger.info("Evaluation result: {}".format(result))
 
     #plot training and validation losses
