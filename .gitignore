@@ -136,3 +136,6 @@ home/
 
 # Checkpoints
 outputs/
+
+# Data
+Data/
