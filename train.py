@@ -121,13 +121,12 @@ def main ():
     opt = torch.optim.Adam(unet.parameters(), lr=cfg.LEARN_RATE)
 
     #do some training 
-    logger.info("network: {}".format(unet._dict_))
     train_loss, valid_loss = start_train(unet, train_data, valid_data, loss_fn, opt, dice_score, epochs=cfg.EPOCHS)
     
     # Evaluate network
     logger.info('Start evaluating...')
     torch.cuda.empty_cache()  # speed up evaluating after training finished
-    result = do_evaluation(test_data, model, dice_fn)
+    result = do_evaluation(test_data, unet, dice_fn)
     logger.info("Evaluation result: {}".format(result))
 
     #plot training and validation losses

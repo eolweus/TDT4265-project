@@ -1,0 +1,97 @@
+2021-04-19 06:37:53,000 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-19 06:39:31,173 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-19 06:39:31,173 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-19 06:39:35,738 U.trainer INFO: No checkpoint found.
+2021-04-19 06:39:35,738 U.trainer INFO: No checkpoint found.
+2021-04-19 06:39:35,740 U.trainer INFO: Start training ...
+2021-04-19 06:39:35,740 U.trainer INFO: Start training ...
+2021-04-19 06:41:52,670 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-19 06:41:52,670 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-19 06:45:24,870 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-19 06:45:24,870 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-19 06:47:52,170 U.trainer INFO: Saving checkpoint to outputs/model_000004.pth
+2021-04-19 06:47:52,170 U.trainer INFO: Saving checkpoint to outputs/model_000004.pth
+2021-04-19 06:50:14,870 U.trainer INFO: Saving checkpoint to outputs/model_000006.pth
+2021-04-19 06:50:14,870 U.trainer INFO: Saving checkpoint to outputs/model_000006.pth
+2021-04-19 06:52:09,369 U.trainer INFO: Saving checkpoint to outputs/model_000008.pth
+2021-04-19 06:52:09,369 U.trainer INFO: Saving checkpoint to outputs/model_000008.pth
+2021-04-19 06:54:17,073 U INFO: Start evaluating...
+2021-04-19 06:54:17,073 U INFO: Start evaluating...
+2021-04-19 07:03:04,863 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-19 07:03:04,863 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-19 07:03:04,863 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-19 07:03:06,379 U.trainer INFO: Loading checkpoint from outputs/model_000008.pth
+2021-04-19 07:03:06,379 U.trainer INFO: Loading checkpoint from outputs/model_000008.pth
+2021-04-19 07:03:06,379 U.trainer INFO: Loading checkpoint from outputs/model_000008.pth
+2021-04-19 07:03:06,401 U.trainer INFO: Loading optimizer from outputs/model_000008.pth
+2021-04-19 07:03:06,401 U.trainer INFO: Loading optimizer from outputs/model_000008.pth
+2021-04-19 07:03:06,401 U.trainer INFO: Loading optimizer from outputs/model_000008.pth
+2021-04-19 07:03:06,414 U.trainer INFO: Start training ...
+2021-04-19 07:03:06,414 U.trainer INFO: Start training ...
+2021-04-19 07:03:06,414 U.trainer INFO: Start training ...
+2021-04-19 07:05:16,604 U.trainer INFO: Saving checkpoint to outputs/model_000008.pth
+2021-04-19 07:05:16,604 U.trainer INFO: Saving checkpoint to outputs/model_000008.pth
+2021-04-19 07:05:16,604 U.trainer INFO: Saving checkpoint to outputs/model_000008.pth
+2021-04-19 07:10:40,199 U.trainer INFO: Saving checkpoint to outputs/model_000010.pth
+2021-04-19 07:10:40,199 U.trainer INFO: Saving checkpoint to outputs/model_000010.pth
+2021-04-19 07:10:40,199 U.trainer INFO: Saving checkpoint to outputs/model_000010.pth
+2021-04-19 07:14:10,947 U.trainer INFO: Saving checkpoint to outputs/model_000012.pth
+2021-04-19 07:14:10,947 U.trainer INFO: Saving checkpoint to outputs/model_000012.pth
+2021-04-19 07:14:10,947 U.trainer INFO: Saving checkpoint to outputs/model_000012.pth
+2021-04-19 07:17:08,394 U.trainer INFO: Saving checkpoint to outputs/model_000014.pth
+2021-04-19 07:17:08,394 U.trainer INFO: Saving checkpoint to outputs/model_000014.pth
+2021-04-19 07:17:08,394 U.trainer INFO: Saving checkpoint to outputs/model_000014.pth
+2021-04-19 07:21:09,903 U.trainer INFO: Saving checkpoint to outputs/model_000016.pth
+2021-04-19 07:21:09,903 U.trainer INFO: Saving checkpoint to outputs/model_000016.pth
+2021-04-19 07:21:09,903 U.trainer INFO: Saving checkpoint to outputs/model_000016.pth
+2021-04-19 07:27:32,001 U.trainer INFO: Saving checkpoint to outputs/model_000018.pth
+2021-04-19 07:27:32,001 U.trainer INFO: Saving checkpoint to outputs/model_000018.pth
+2021-04-19 07:27:32,001 U.trainer INFO: Saving checkpoint to outputs/model_000018.pth
+2021-04-19 07:32:57,702 U.trainer INFO: Saving checkpoint to outputs/model_000020.pth
+2021-04-19 07:32:57,702 U.trainer INFO: Saving checkpoint to outputs/model_000020.pth
+2021-04-19 07:32:57,702 U.trainer INFO: Saving checkpoint to outputs/model_000020.pth
+2021-04-19 07:37:14,702 U.trainer INFO: Saving checkpoint to outputs/model_000022.pth
+2021-04-19 07:37:14,702 U.trainer INFO: Saving checkpoint to outputs/model_000022.pth
+2021-04-19 07:37:14,702 U.trainer INFO: Saving checkpoint to outputs/model_000022.pth
+2021-04-19 07:43:26,009 U.trainer INFO: Saving checkpoint to outputs/model_000024.pth
+2021-04-19 07:43:26,009 U.trainer INFO: Saving checkpoint to outputs/model_000024.pth
+2021-04-19 07:43:26,009 U.trainer INFO: Saving checkpoint to outputs/model_000024.pth
+2021-04-19 07:47:41,831 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-19 07:47:50,664 U.trainer INFO: Loading checkpoint from outputs/model_000024.pth
+2021-04-19 07:47:50,687 U.trainer INFO: Loading optimizer from outputs/model_000024.pth
+2021-04-19 07:47:50,699 U.trainer INFO: Start training ...
