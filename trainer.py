@@ -56,8 +56,6 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, epochs, chec
                     optimizer.zero_grad()
                     outputs = model(x)
                     loss = loss_fn(outputs, y)
-                    
-                    
 
                     # the backward pass frees the graph memory, so there is no 
                     # need for torch.no_grad in this training pass

@@ -18,8 +18,8 @@ from utils.dice import dice_multiclass as dice_score
 from trainer import do_train
 
 from Unet2D import Unet2D
-
-
+#import os
+#os.environ['CUDA_LAUNCH_BLOCKING'] = 1
 
 def do_evaluation(data, model, dice_fn, dataloader):
     running_dice = 0
@@ -109,7 +109,7 @@ def main ():
 
     # build the Unet2D with one channel as input and 2 channels as output
     
-    unet = Unet2D(1,2)
+    unet = Unet2D(1,4)
     logger.info(unet)
     
     #loss function and optimizer

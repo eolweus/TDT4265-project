@@ -16,12 +16,12 @@ def dice_multiclass(predb, yb, smooth=1e5):
     dice_scores = np.zeros((n_classes, batch_size))
     for batch in range(batch_size):
         pred = predb[batch, :, :, :]
-        target_flat = to_cuda(yb)[batch, :, :].view(-1)
+        target_flat = yb.cuda()[batch, :, :].view(-1)
         # Ignore IoU for background class ("0")
         for cls in range(1,n_classes):  # This goes from 1:n_classes-1 -> class "0" is ignored
             pred_class_flat = pred[cls, :, :].view(-1)
-            intersection = (pred_cls * target).sum()
-            dice[cls, batch] = dice[cls,batch] + ((2 * intersection + smooth) / (pred_cls.sum() + target.sum() + smooth)) #.item()
+            intersection = (pred_class_flat * target_flat).sum()
+            dice_scores[cls, batch] = dice_scores[cls,batch] + ((2 * intersection + smooth) / (pred_class_flat.sum() + target_flat.sum() + smooth)) #.item()
 
-    dice_scores = np.mean(dice, axis=1)
-    return np.mean(dice_scores), list(dice_scores)
+    dice_scores = np.mean(dice_scores, axis=1)
+    return np.mean(dice_scores) #list(dice_scores)
