@@ -1,22 +1,22 @@
 import logging
-import numpy as np
 import pandas as pd
 import matplotlib as mp
 import matplotlib.pyplot as plt
 import time
 import sklearn.metrics
 import pathlib
-from utils.checkpoint import CheckPointer
-from utils.logger import setup_logger
-from trainer import do_train
-from pathlib import Path
 import torch
+from pathlib import Path
 from torch.utils.data import Dataset, DataLoader, sampler
 from torch import nn
 from configs import cfg
 from decouple import config
 
 from DatasetLoader import DatasetLoader, TTELoader, ResizedLoader
+from utils.checkpoint import CheckPointer
+from utils.logger import setup_logger
+from utils.dice import dice_metric as dice_score
+from trainer import do_train
 from Unet2D import Unet2D
 
 
@@ -24,7 +24,6 @@ TTE_BASE_PATH=config('TTE_BASE_PATH')
 TTE_FULL_BASE_PATH=config('TTE_FULL_BASE_PATH')
 TTE_TEST_BASE_PATH=config('TTE_FULL_TEST_BASE_PATH')
 TEE_BASE_PATH=config('TEE_BASE_PATH')
-
 
 def do_evaluation(data, model, dice_fn, dataloader):
     running_dice = 0
@@ -62,32 +61,6 @@ def start_train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1)
     train_loss, valid_loss = do_train(model,train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs, checkpointer, arguments)
     return train_loss, valid_loss
 
-def dice_score(predb, yb):
-
-    predflat = predb.argmax(dim=1).view(-1)
-    yflat = yb.cuda().view(-1)
-    intersection = (predflat * yflat).sum()
-    
-    return (2 * intersection) / (predflat.sum() + yflat.sum())
-
-
-#### fosskokt, skal se om alt er reiktig
-def dice_multiclass(predb, yb, smooth=1e5):
-    batch_size = predb.shape[0]
-    n_classes = predb.shape[1]
-    dice_scores = np.zeros((n_classes, batch_size))
-    for batch in range(batch_size):
-        pred = predb[batch, :, :, :]
-        target_flat = to_cuda(yb)[batch, :, :].view(-1)
-        # Ignore IoU for background class ("0")
-        for cls in range(1,n_classes):  # This goes from 1:n_classes-1 -> class "0" is ignored
-            pred_class_flat = pred[cls, :, :].view(-1)
-            intersection = (pred_cls * target).sum()
-            dice[cls, batch] = dice[cls,batch] + ((2 * intersection + smooth) / (pred_cls.sum() + target.sum() + smooth)) #.item()
-
-    dice_scores = np.mean(dice, axis=1)
-    return np.mean(dice_scores), list(dice_scores)
-
 
 def batch_to_img(xb, idx):
     img = np.array(xb[idx,0:3])
@@ -116,14 +89,19 @@ def main ():
     # data = ResizedLoader(base_path)
 
     base_path = Path(TTE_FULL_BASE_PATH)
+    test_path = Path(TTE_FULL_TEST_BASE_PATH)
     data = TTELoader(base_path)
+    test_dataset = TTELoader(test_path)
 
     print(len(data))
 
+    #split the training dataset and initialize the data loaders
+    print("Train Data length: {}".format(len(data)))
+    print("Test Data length: {}".format(len(test_dataset)))    
     train_partition = 2*len(data)//3
     val_partition = len(data)-train_partition
 
-    #split the training dataset and initialize the data loaders
+    # split the training dataset and initialize the data loaders
     train_dataset, valid_dataset = torch.utils.data.random_split(data, (train_partition, val_partition))
     train_data = DataLoader(train_dataset, batch_size=bs, shuffle=True)
     valid_data = DataLoader(valid_dataset, batch_size=bs, shuffle=True)
@@ -136,13 +114,12 @@ def main ():
         ax[0].imshow(data.open_as_array(150))
         ax[1].imshow(data.open_mask(150))
         plt.show()
-
     xb, yb = next(iter(train_data))
     print (xb.shape, yb.shape)
 
     # build the Unet2D with one channel as input and 2 channels as output
     
-    unet = Unet2D(1,2)
+    unet = Unet2D(1,4)
     logger.info(unet)
     
     #loss function and optimizer
