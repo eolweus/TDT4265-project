@@ -1,0 +1,9 @@
+MODEL:
+    NUM_CLASSES: 2
+INPUT:
+    IMAGE_SIZE: [384, 384]
+DATASET: "resized_CAMUS"
+SOLVER:
+    BATCH_SIZE: 12
+    LR: 0.01
+OUTPUT_DIR: './outputs/resized_CAMUS'

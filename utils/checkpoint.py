@@ -10,14 +10,14 @@ class CheckPointer:
     def __init__(self,
                  model,
                  optimizer=None,
-                 save_dir="",
+                 save_dir="./outputs",
                  save_to_disk=None,
                  logger=None,
                  scheduler=None,):
         self.model = model
         self.optimizer = optimizer
         self.scheduler = scheduler
-        self.save_dir = save_dir
+        self.save_dir = save_dir+"/checkpoints"
         self.save_to_disk = save_to_disk
         if logger is None:
             logger = logging.getLogger(__name__)
