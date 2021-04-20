@@ -15,17 +15,19 @@ from decouple import config
 from DatasetLoader import DatasetLoader, TTELoader, ResizedLoader
 from utils.checkpoint import CheckPointer
 from utils.logger import setup_logger
-from utils.dice import dice_multiclass as dice_score
+from utils.dice import dice_metric as dice_score
 from trainer import do_train
 from Unet2D import Unet2D
 
 from Unet2D import Unet2D
 
+#import os
+#os.environ['CUDA_LAUNCH_BLOCKING'] = 1
+
 TTE_BASE_PATH=config('TTE_BASE_PATH')
 TTE_FULL_BASE_PATH=config('TTE_FULL_BASE_PATH')
 TTE_TEST_BASE_PATH=config('TTE_FULL_TEST_BASE_PATH')
 TEE_BASE_PATH=config('TEE_BASE_PATH')
-
 
 def do_evaluation(data, model, dice_fn, dataloader):
     running_dice = 0
@@ -122,7 +124,7 @@ def main ():
 
     # build the Unet2D with one channel as input and 2 channels as output
     
-    unet = Unet2D(1,2)
+    unet = Unet2D(1,4)
     logger.info(unet)
     
     #loss function and optimizer
