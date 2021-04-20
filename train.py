@@ -14,17 +14,17 @@ import torch
 from torch.utils.data import Dataset, DataLoader, sampler
 from torch import nn
 from configs import cfg
+from decouple import config
 
-from DatasetLoader import DatasetLoader
+from DatasetLoader import DatasetLoader, TTELoader, ResizedLoader
 from Unet2D import Unet2D
 
 
-# +
-#from decouple import config
+TTE_BASE_PATH=config('TTE_BASE_PATH')
+TTE_FULL_BASE_PATH=config('TTE_FULL_BASE_PATH')
+TTE_TEST_BASE_PATH=config('TTE_FULL_TEST_BASE_PATH')
+TEE_BASE_PATH=config('TEE_BASE_PATH')
 
-# +
-#DATA_BASE_PATH=config('IMAGE_BASE_PATH')
-# -
 
 def do_evaluation(data, model, dice_fn, dataloader):
     running_dice = 0
@@ -104,24 +104,33 @@ def main ():
     output_dir.mkdir(exist_ok=True, parents=True)
     logger = setup_logger("U", "logs")
     logger.info("Loaded configuration file {}".format(cfg))
+
+    lr = cfg.LEARN_RATE
+    bs = cfg.BATCH_SIZE
+    epochs = cfg.EPOCHS
     
     # sets the matplotlib display backend (most likely not needed)
-    #mp.use('TkAgg', force=True)
+    # mp.use('TkAgg', force=True)
 
-    #load the training data
-    cluster_path = '../../../../../work/datasets/medical_project/CAMUS_resized'
-    #Path(DATA_BASE_PATH)
-    base_path = Path(cluster_path)
-    data = DatasetLoader(base_path/'train_gray', 
-                        base_path/'train_gt')
+    # base_path = Path(TTE_BASE_PATH)
+    # data = ResizedLoader(base_path)
+
+    base_path = Path(TTE_FULL_BASE_PATH)
+    data = TTELoader(base_path)
+
+    print(len(data))
+
+    train_partition = 2*len(data)//3
+    val_partition = len(data)-train_partition
 
     #split the training dataset and initialize the data loaders
-    train_val_dataset, test_dataset = torch.utils.data.random_split(data, (450 - cfg.TEST_SIZE, cfg.TEST_SIZE))
-    train_dataset, validation_dataset = torch.utils.data.random_split(train_val_dataset, (450 - cfg.TEST_SIZE - cfg.VALIDATION_SIZE, cfg.VALIDATION_SIZE))
-    train_data = DataLoader(train_dataset, batch_size=cfg.BATCH_SIZE, shuffle=True)
-    valid_data = DataLoader(validation_dataset, batch_size=cfg.BATCH_SIZE, shuffle=True)
-    test_data = DataLoader(test_dataset, batch_size=cfg.BATCH_SIZE, shuffle=True)
-    
+    train_dataset, valid_dataset = torch.utils.data.random_split(data, (train_partition, val_partition))
+    train_data = DataLoader(train_dataset, batch_size=bs, shuffle=True)
+    valid_data = DataLoader(valid_dataset, batch_size=bs, shuffle=True)
+    # test_data = DataLoader(test_dataset, batch_size=bs, shuffle=True)
+
+    # TODO: set up test set
+
     if cfg.VISUAL_DEBUG:
         fig, ax = plt.subplots(1,2)
         ax[0].imshow(data.open_as_array(150))
@@ -141,7 +150,7 @@ def main ():
     opt = torch.optim.Adam(unet.parameters(), lr=cfg.LEARN_RATE)
 
     #do some training 
-    train_loss, valid_loss = start_train(unet, train_data, valid_data, loss_fn, opt, dice_score, epochs=cfg.EPOCHS)
+    train_loss, valid_loss = start_train(unet, train_data, valid_data, loss_fn, opt, dice_score, epochs=epochs)
     
     # Evaluate network
     logger.info('Start evaluating...')
@@ -164,8 +173,8 @@ def main ():
 
     #show the predicted segmentations
     if cfg.VISUAL_DEBUG:
-        fig, ax = plt.subplots(cfg.BATCH_SIZE,3, figsize=(15,cfg.BATCH_SIZE*5))
-        for i in range(cfg.BATCH_SIZE):
+        fig, ax = plt.subplots(bs,3, figsize=(15,bs*5))
+        for i in range(bs):
             ax[i,0].imshow(batch_to_img(xb,i))
             ax[i,1].imshow(yb[i])
             ax[i,2].imshow(predb_to_mask(predb, i))
