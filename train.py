@@ -11,6 +11,7 @@ from torch.utils.data import Dataset, DataLoader, sampler
 from torch import nn
 from configs import cfg
 from decouple import config
+import numpy as np
 
 from DatasetLoader import DatasetLoader, TTELoader, ResizedLoader
 from utils.checkpoint import CheckPointer
@@ -105,7 +106,7 @@ def main ():
     train_dataset, valid_dataset = torch.utils.data.random_split(data, (train_partition, val_partition))
     train_data = DataLoader(train_dataset, batch_size=bs, shuffle=True)
     valid_data = DataLoader(valid_dataset, batch_size=bs, shuffle=True)
-    # test_data = DataLoader(test_dataset, batch_size=bs, shuffle=True)
+    test_data = DataLoader(test_dataset, batch_size=6, shuffle=True)
 
     # TODO: set up test set
 
