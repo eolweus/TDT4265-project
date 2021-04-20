@@ -3329,3 +3329,15 @@ VISUAL_DEBUG: True
 2021-04-20 15:04:47,420 U.trainer INFO: Loading checkpoint from outputs\model_000008.pth
 2021-04-20 15:04:47,448 U.trainer INFO: Loading optimizer from outputs\model_000008.pth
 2021-04-20 15:04:47,469 U.trainer INFO: Start training ...
+2021-04-20 19:25:42,515 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-20 19:27:10,369 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True

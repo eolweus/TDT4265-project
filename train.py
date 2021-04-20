@@ -22,7 +22,7 @@ from Unet2D import Unet2D
 
 TTE_BASE_PATH=config('TTE_BASE_PATH')
 TTE_FULL_BASE_PATH=config('TTE_FULL_BASE_PATH')
-TTE_TEST_BASE_PATH=config('TTE_FULL_TEST_BASE_PATH')
+TTE_FULL_TEST_BASE_PATH=config('TTE_FULL_TEST_BASE_PATH')
 TEE_BASE_PATH=config('TEE_BASE_PATH')
 
 def do_evaluation(data, model, dice_fn, dataloader):
