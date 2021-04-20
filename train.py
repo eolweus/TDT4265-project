@@ -19,10 +19,6 @@ from utils.dice import dice_metric as dice_score
 from trainer import do_train
 from Unet2D import Unet2D
 
-from Unet2D import Unet2D
-
-#import os
-#os.environ['CUDA_LAUNCH_BLOCKING'] = 1
 
 TTE_BASE_PATH=config('TTE_BASE_PATH')
 TTE_FULL_BASE_PATH=config('TTE_FULL_BASE_PATH')
@@ -118,7 +114,6 @@ def main ():
         ax[0].imshow(data.open_as_array(150))
         ax[1].imshow(data.open_mask(150))
         plt.show()
-    #print(train_data[1].shape)
     xb, yb = next(iter(train_data))
     print (xb.shape, yb.shape)
 
