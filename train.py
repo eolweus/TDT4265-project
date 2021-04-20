@@ -14,7 +14,7 @@ from configs import cfg
 from DatasetLoader import DatasetLoader, TTELoader, ResizedLoader
 from utils.checkpoint import CheckPointer
 from utils.logger import setup_logger
-from utils.dice import dice_multiclass as dice_score
+from utils.dice import dice_metric as dice_score
 from trainer import do_train
 
 from Unet2D import Unet2D
@@ -96,7 +96,7 @@ def main ():
     train_dataset, validation_dataset = torch.utils.data.random_split(data, (450 - cfg.VALIDATION_SIZE, cfg.VALIDATION_SIZE))
     train_data = DataLoader(train_dataset, batch_size=cfg.BATCH_SIZE, shuffle=True)
     valid_data = DataLoader(validation_dataset, batch_size=cfg.BATCH_SIZE, shuffle=True)
-    #test_data = DataLoader(test_dataset, batch_size=cfg.BATCH_SIZE, shuffle=True)
+    test_data = DataLoader(test_dataset, batch_size=cfg.BATCH_SIZE, shuffle=True)
     
     if cfg.VISUAL_DEBUG:
         fig, ax = plt.subplots(1,2)

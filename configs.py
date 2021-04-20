@@ -3,7 +3,7 @@ from yacs.config import CfgNode as CN
 cfg = CN()
 
 cfg.VISUAL_DEBUG = True
-cfg.BATCH_SIZE = 2
+cfg.BATCH_SIZE = 12
 cfg.EPOCHS = 50
 cfg.LEARN_RATE = 0.01
 
