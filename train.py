@@ -14,7 +14,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader, sampler
 from torch import nn
 from configs import cfg
-#from decouple import config
+from decouple import config
 
 from DatasetLoader import DatasetLoader, TTELoader, ResizedLoader
 from Unet2D import Unet2D
