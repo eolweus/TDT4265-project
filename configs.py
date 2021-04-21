@@ -4,6 +4,7 @@ cfg = CN()
 
 cfg.VISUAL_DEBUG = True
 cfg.BATCH_SIZE = 12
+cfg.TEST_BATCH_SIZE = 6
 cfg.EPOCHS = 50
 cfg.LEARN_RATE = 0.01
 

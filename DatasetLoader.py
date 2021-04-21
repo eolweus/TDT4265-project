@@ -131,8 +131,6 @@ class TTELoader(DatasetLoader):
     
 
     def create_dict(self, data_dir, Tif_dir=False):
-        
-        
         dict_list=[]
         for root, dirs, files in os.walk(data_dir, topdown=True):
             for name in files:
@@ -174,6 +172,63 @@ class TTELoader(DatasetLoader):
         # Reads the image using SimpleITK
         itkimage = sitk.ReadImage(filename)
 
+        # Convert the image to a  numpy array first and then shuffle the dimensions to get axis in the order z,y,x
+        img_as_array = sitk.GetArrayFromImage(itkimage)
+        # Removes the z-axis and transposes the image
+        processed_img_as_array = np.transpose(np.squeeze(img_as_array))
+        return processed_img_as_array
+    
+
+class TEELoader(DatasetLoader):
+    def __init__(self, data_dir, pytorch=True):
+        self.img_size = 384 # må gjøre dette dynamisk
+        super().__init__(data_dir)
+
+        
+    
+    def create_dict(self, data_dir, Tif_dir=False):
+        dict_list=[]
+        for filename in os.listdir(data_dir):
+            if filename[:5] == "gray_":
+                dict_list.append(self.combine_files(data_dir, filename))
+                break
+        return dict_list  
+
+
+    def combine_files(self, root, gt_file_name):
+        gray_path = os.path.join(root, gt_file_name)
+        gt_path = gray_path.replace("gray_", "gt_gt_")
+        gt_path = gt_path.replace(".jpg", ".tif")
+        files = {'gt': gt_path, 
+                'gray': gray_path}
+        return files
+
+    # TODO: make sure all the images are of equal size
+    def open_as_array(self, idx, invert=False):
+        raw_us = np.array(self.load_itk(self.files[idx]['gray']))
+        raw_us = cv2.resize(raw_us, dsize=(self.img_size, self.img_size))
+        raw_us = np.stack([raw_us], axis=2)
+        
+        if invert:
+            raw_us = raw_us.transpose((2,0,1))
+    
+        # normalize
+        return (raw_us / np.iinfo(raw_us.dtype).max)
+
+    # TODO: edit this to fit tte
+    def open_mask(self, idx, add_dims=False):
+        #open mask file
+        raw_mask = np.array((cv2.imread(self.files[idx]['gt'], cv2.IMREAD_GRAYSCALE)))
+        raw_mask = cv2.resize(raw_mask, dsize=(self.img_size, self.img_size))
+        raw_mask = np.where(raw_mask>100, 1, 0)
+        
+        return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
+
+
+    def load_itk(self, filename):
+        # Reads the image using SimpleITK
+        itkimage = sitk.ReadImage(filename)
+        
         # Convert the image to a  numpy array first and then shuffle the dimensions to get axis in the order z,y,x
         img_as_array = sitk.GetArrayFromImage(itkimage)
         # Removes the z-axis and transposes the image
