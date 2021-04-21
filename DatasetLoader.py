@@ -82,8 +82,8 @@ class DatasetLoader(Dataset):
 
 
 class ResizedLoader(DatasetLoader):
-    def __init__(self, data_dir, pytorch=True):
-        super().__init__(data_dir)
+    def __init__(self, data_dir, use_transforms=False, pytorch=True):
+        super().__init__(data_dir, use_transforms=use_transforms)
 
     def create_dict(self, data_dir):
         gray_dir, gt_dir = [Path(os.path.join(data_dir, name)) for name in next(os.walk(data_dir))[1]] 
@@ -137,16 +137,11 @@ class ResizedLoader(DatasetLoader):
 
 
 class TTELoader(DatasetLoader):
-    def __init__(self, data_dir, pytorch=True):
+    def __init__(self, data_dir, use_transforms=False, pytorch=True):
         self.img_size = 384 # må gjøre dette dynamisk
-        super().__init__(data_dir)
-
-        
-    
+        super().__init__(data_dir, use_transforms=use_transforms)    
 
     def create_dict(self, data_dir, Tif_dir=False):
-        
-        
         dict_list=[]
         for root, dirs, files in os.walk(data_dir, topdown=True):
             for name in files:
