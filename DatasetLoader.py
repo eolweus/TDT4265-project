@@ -164,7 +164,6 @@ class TTELoader(DatasetLoader):
         raw_mask = np.array((self.load_itk(self.files[idx]['gt'])))
         raw_mask = cv2.resize(raw_mask, dsize=(self.img_size, self.img_size))
         # raw_mask = np.where(raw_mask>100, 1, 0)
-        
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 
 
@@ -191,7 +190,6 @@ class TEELoader(DatasetLoader):
         for filename in os.listdir(data_dir):
             if filename[:5] == "gray_":
                 dict_list.append(self.combine_files(data_dir, filename))
-                break
         return dict_list  
 
 
@@ -220,7 +218,13 @@ class TEELoader(DatasetLoader):
         #open mask file
         raw_mask = np.array((cv2.imread(self.files[idx]['gt'], cv2.IMREAD_GRAYSCALE)))
         raw_mask = cv2.resize(raw_mask, dsize=(self.img_size, self.img_size))
-        raw_mask = np.where(raw_mask>100, 1, 0)
+        #print(np.unique(raw_mask, return_counts = True))
+        raw_mask = np.where(raw_mask>100, raw_mask, 0)
+        raw_mask = np.where(raw_mask == 120, 2, raw_mask)
+        raw_mask = np.where(raw_mask>200, 3, raw_mask)
+        raw_mask = np.where(raw_mask>100, 1, raw_mask)
+
+
         
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 

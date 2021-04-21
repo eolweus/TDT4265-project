@@ -32,8 +32,6 @@ def do_evaluation(data, model, dice_fn):
     for x, y in data:
         x = x.cuda()
         y = y.cuda()
-        print(y.shape)
-        print(x.shape)
         outputs = model(x)
         Dice = dice_fn(outputs, y)
         running_dice  += Dice*data.batch_size
