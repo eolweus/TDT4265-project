@@ -6663,3 +6663,937 @@ VISUAL_DEBUG: True
 2021-04-21 13:49:17,739 U INFO: Evaluation result: 0.9463438391685486
 2021-04-21 13:49:17,740 U INFO: Start evaluating on TEE data...
 2021-04-21 13:49:17,836 U INFO: Evaluation result: 1.516878366470337
+2021-04-21 14:59:43,411 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-21 15:00:52,335 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-21 15:00:52,335 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-21 15:00:54,663 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-21 15:00:54,663 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-21 15:00:54,663 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-21 15:02:00,144 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-21 15:02:00,144 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-21 15:02:00,144 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-21 15:02:00,144 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-21 15:02:13,629 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-21 15:05:15,741 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:32:39,270 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:32:39,270 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:33:37,439 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:34:26,868 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:34:54,881 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:42:48,952 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:42:48,952 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:42:54,111 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:43:08,893 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:43:09,329 U INFO: Unet2D(
+  (conv1): Sequential(
+    (0): Conv2d(1, 32, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3))
+    (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(32, 32, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3))
+    (4): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (conv2): Sequential(
+    (0): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (conv3): Sequential(
+    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (conv4): Sequential(
+    (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (upconv4): Sequential(
+    (0): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+  (upconv3): Sequential(
+    (0): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+  (upconv2): Sequential(
+    (0): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(32, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+  (upconv1): Sequential(
+    (0): Conv2d(64, 4, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(4, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(4, 4, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(4, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(4, 4, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+)
+2021-04-22 14:43:12,907 U.trainer INFO: Loading checkpoint from outputs/model_000000.pth
+2021-04-22 14:43:38,171 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:44:22,177 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:44:22,623 U INFO: Unet2D(
+  (conv1): Sequential(
+    (0): Conv2d(1, 32, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3))
+    (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(32, 32, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3))
+    (4): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (conv2): Sequential(
+    (0): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (conv3): Sequential(
+    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (conv4): Sequential(
+    (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (upconv4): Sequential(
+    (0): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+  (upconv3): Sequential(
+    (0): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+  (upconv2): Sequential(
+    (0): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(32, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+  (upconv1): Sequential(
+    (0): Conv2d(64, 4, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(4, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(4, 4, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(4, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(4, 4, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+)
+2021-04-22 14:44:24,195 U.trainer INFO: Loading checkpoint from outputs/model_000000.pth
+2021-04-22 14:45:21,967 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:45:22,386 U INFO: Unet2D(
+  (conv1): Sequential(
+    (0): Conv2d(1, 32, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3))
+    (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(32, 32, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3))
+    (4): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (conv2): Sequential(
+    (0): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (conv3): Sequential(
+    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (conv4): Sequential(
+    (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  )
+  (upconv4): Sequential(
+    (0): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+  (upconv3): Sequential(
+    (0): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+  (upconv2): Sequential(
+    (0): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(32, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+  (upconv1): Sequential(
+    (0): Conv2d(64, 4, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(4, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): Conv2d(4, 4, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (4): BatchNorm2d(4, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU()
+    (6): ConvTranspose2d(4, 4, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+  )
+)
+2021-04-22 14:45:23,869 U.trainer INFO: Start training ...
+2021-04-22 14:47:43,688 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:47:45,753 U.trainer INFO: Start training ...
+2021-04-22 14:56:49,848 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 14:56:51,766 U.trainer INFO: Start training ...
+2021-04-22 14:57:06,814 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 15:00:28,019 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 15:00:30,044 U.trainer INFO: Start training ...
+2021-04-22 15:02:24,647 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 15:02:26,535 U.trainer INFO: Start training ...
+2021-04-22 15:02:40,379 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 15:05:36,547 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 15:05:38,595 U.trainer INFO: Start training ...
+2021-04-22 15:05:58,473 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 15:06:00,637 U.trainer INFO: Start training ...
+2021-04-22 15:06:15,522 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 15:07:05,033 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 15:07:07,117 U.trainer INFO: Start training ...
+2021-04-22 15:07:42,759 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 15:07:44,853 U.trainer INFO: Start training ...
+2021-04-22 15:08:02,438 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 15:09:45,965 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 15:10:35,814 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 15:13:13,364 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 15:13:29,370 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 15:14:29,726 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 15:14:55,212 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 16:10:09,531 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 16:10:09,531 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 16:10:42,801 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 16:11:40,626 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 16:11:44,234 U.trainer INFO: Start training ...
+2021-04-22 16:14:52,729 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 16:14:54,732 U.trainer INFO: Start training ...
+2021-04-22 16:15:11,364 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 16:15:41,872 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-22 16:15:57,005 U INFO: Start evaluating on TTE data...
+2021-04-22 16:20:30,063 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 16:20:32,025 U.trainer INFO: Start training ...
+2021-04-22 16:20:47,378 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 16:21:18,277 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-22 16:21:49,559 U.trainer INFO: Saving checkpoint to outputs/model_000004.pth
+2021-04-22 16:22:20,013 U.trainer INFO: Saving checkpoint to outputs/model_000006.pth
+2021-04-22 16:22:52,017 U.trainer INFO: Saving checkpoint to outputs/model_000008.pth
+2021-04-22 16:23:21,709 U.trainer INFO: Saving checkpoint to outputs/model_000010.pth
+2021-04-22 16:31:14,889 U.trainer INFO: Saving checkpoint to outputs/model_000012.pth
+2021-04-22 19:55:32,234 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 19:55:36,180 U.trainer INFO: Start training ...
+2021-04-22 20:01:20,991 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 20:04:34,883 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 20:55:34,209 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 20:57:30,736 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 20:59:47,746 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 21:15:12,415 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 21:19:06,814 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 21:20:27,330 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 21:21:46,442 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 21:24:06,508 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 21:35:46,748 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 21:36:54,980 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 21:39:37,009 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 21:41:50,152 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 21:49:20,890 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 21:49:34,780 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 21:49:45,584 U.trainer INFO: Start training ...
+2021-04-22 21:49:46,375 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 21:49:47,734 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-22 21:49:49,062 U.trainer INFO: Saving checkpoint to outputs/model_000004.pth
+2021-04-22 21:49:50,372 U.trainer INFO: Saving checkpoint to outputs/model_000006.pth
+2021-04-22 21:49:51,673 U.trainer INFO: Saving checkpoint to outputs/model_000008.pth
+2021-04-22 21:49:52,939 U INFO: Start evaluating on TTE data...
+2021-04-22 21:59:52,283 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:00:10,687 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:01:00,508 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:01:28,599 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:04:01,354 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:19:38,098 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:20:49,354 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:21:33,945 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:22:32,569 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:24:25,518 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:24:54,120 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:24:55,672 U.trainer INFO: Start training ...
+2021-04-22 22:24:56,582 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 22:24:58,131 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-22 22:24:59,684 U.trainer INFO: Saving checkpoint to outputs/model_000004.pth
+2021-04-22 22:25:01,236 U.trainer INFO: Saving checkpoint to outputs/model_000006.pth
+2021-04-22 22:25:02,855 U.trainer INFO: Saving checkpoint to outputs/model_000008.pth
+2021-04-22 22:25:04,374 U.trainer INFO: Saving checkpoint to outputs/model_000010.pth
+2021-04-22 22:25:05,982 U.trainer INFO: Saving checkpoint to outputs/model_000012.pth
+2021-04-22 22:25:07,620 U.trainer INFO: Saving checkpoint to outputs/model_000014.pth
+2021-04-22 22:25:09,133 U.trainer INFO: Saving checkpoint to outputs/model_000016.pth
+2021-04-22 22:25:10,614 U.trainer INFO: Saving checkpoint to outputs/model_000018.pth
+2021-04-22 22:25:12,085 U.trainer INFO: Saving checkpoint to outputs/model_000020.pth
+2021-04-22 22:25:13,559 U.trainer INFO: Saving checkpoint to outputs/model_000022.pth
+2021-04-22 22:25:15,009 U.trainer INFO: Saving checkpoint to outputs/model_000024.pth
+2021-04-22 22:25:16,508 U.trainer INFO: Saving checkpoint to outputs/model_000026.pth
+2021-04-22 22:25:18,012 U.trainer INFO: Saving checkpoint to outputs/model_000028.pth
+2021-04-22 22:25:19,440 U.trainer INFO: Saving checkpoint to outputs/model_000030.pth
+2021-04-22 22:25:20,879 U.trainer INFO: Saving checkpoint to outputs/model_000032.pth
+2021-04-22 22:25:22,318 U.trainer INFO: Saving checkpoint to outputs/model_000034.pth
+2021-04-22 22:25:23,775 U.trainer INFO: Saving checkpoint to outputs/model_000036.pth
+2021-04-22 22:25:25,204 U.trainer INFO: Saving checkpoint to outputs/model_000038.pth
+2021-04-22 22:25:26,705 U.trainer INFO: Saving checkpoint to outputs/model_000040.pth
+2021-04-22 22:25:28,230 U.trainer INFO: Saving checkpoint to outputs/model_000042.pth
+2021-04-22 22:25:29,732 U.trainer INFO: Saving checkpoint to outputs/model_000044.pth
+2021-04-22 22:25:31,248 U.trainer INFO: Saving checkpoint to outputs/model_000046.pth
+2021-04-22 22:25:32,745 U.trainer INFO: Saving checkpoint to outputs/model_000048.pth
+2021-04-22 22:25:33,488 U.trainer INFO: Saving checkpoint to outputs/model_final.pth
+2021-04-22 22:26:19,427 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:26:21,204 U.trainer INFO: Start training ...
+2021-04-22 22:26:22,072 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 22:26:23,559 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-22 22:26:25,037 U.trainer INFO: Saving checkpoint to outputs/model_000004.pth
+2021-04-22 22:26:26,449 U.trainer INFO: Saving checkpoint to outputs/model_000006.pth
+2021-04-22 22:26:27,828 U.trainer INFO: Saving checkpoint to outputs/model_000008.pth
+2021-04-22 22:27:11,457 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:27:11,457 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:27:18,442 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:27:59,347 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:27:59,347 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:28:01,058 U.trainer INFO: Start training ...
+2021-04-22 22:28:01,058 U.trainer INFO: Start training ...
+2021-04-22 22:28:01,890 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 22:28:01,890 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 22:28:03,146 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-22 22:28:03,146 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-22 22:28:04,418 U.trainer INFO: Saving checkpoint to outputs/model_000004.pth
+2021-04-22 22:28:04,418 U.trainer INFO: Saving checkpoint to outputs/model_000004.pth
+2021-04-22 22:28:05,655 U.trainer INFO: Saving checkpoint to outputs/model_000006.pth
+2021-04-22 22:28:05,655 U.trainer INFO: Saving checkpoint to outputs/model_000006.pth
+2021-04-22 22:28:06,883 U.trainer INFO: Saving checkpoint to outputs/model_000008.pth
+2021-04-22 22:28:06,883 U.trainer INFO: Saving checkpoint to outputs/model_000008.pth
+2021-04-22 22:28:08,199 U INFO: Start evaluating on TTE data...
+2021-04-22 22:28:08,199 U INFO: Start evaluating on TTE data...
+2021-04-22 22:28:08,300 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:28:08,300 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:28:08,300 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:28:14,346 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:28:14,346 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:28:14,346 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:28:14,346 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:28:14,711 U.trainer INFO: Start training ...
+2021-04-22 22:28:14,711 U.trainer INFO: Start training ...
+2021-04-22 22:28:14,711 U.trainer INFO: Start training ...
+2021-04-22 22:28:14,711 U.trainer INFO: Start training ...
+2021-04-22 22:28:15,323 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 22:28:15,323 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 22:28:15,323 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 22:28:15,323 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 22:28:16,623 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-22 22:28:16,623 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-22 22:28:16,623 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-22 22:28:16,623 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-22 22:28:17,947 U.trainer INFO: Saving checkpoint to outputs/model_000004.pth
+2021-04-22 22:28:17,947 U.trainer INFO: Saving checkpoint to outputs/model_000004.pth
+2021-04-22 22:28:17,947 U.trainer INFO: Saving checkpoint to outputs/model_000004.pth
+2021-04-22 22:28:17,947 U.trainer INFO: Saving checkpoint to outputs/model_000004.pth
+2021-04-22 22:28:19,336 U.trainer INFO: Saving checkpoint to outputs/model_000006.pth
+2021-04-22 22:28:19,336 U.trainer INFO: Saving checkpoint to outputs/model_000006.pth
+2021-04-22 22:28:19,336 U.trainer INFO: Saving checkpoint to outputs/model_000006.pth
+2021-04-22 22:28:19,336 U.trainer INFO: Saving checkpoint to outputs/model_000006.pth
+2021-04-22 22:28:32,880 U INFO: Loaded configuration file BATCH_SIZE: 12
+EPOCHS: 50
+LEARN_RATE: 0.01
+TEST_BATCH_SIZE: 6
+TEST_SIZE: 50
+VALIDATION_SIZE: 150
+VISUAL_DEBUG: True
+2021-04-22 22:28:34,589 U.trainer INFO: Start training ...
+2021-04-22 22:28:35,497 U.trainer INFO: Saving checkpoint to outputs/model_000000.pth
+2021-04-22 22:28:36,881 U.trainer INFO: Saving checkpoint to outputs/model_000002.pth
+2021-04-22 22:28:38,265 U.trainer INFO: Saving checkpoint to outputs/model_000004.pth
+2021-04-22 22:28:39,649 U.trainer INFO: Saving checkpoint to outputs/model_000006.pth
+2021-04-22 22:28:40,970 U.trainer INFO: Saving checkpoint to outputs/model_000008.pth
+2021-04-22 22:28:42,349 U.trainer INFO: Saving checkpoint to outputs/model_000010.pth
