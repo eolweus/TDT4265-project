@@ -132,7 +132,6 @@ class TTELoader(DatasetLoader):
         raw_mask = np.array((self.load_itk(self.files[idx]['gt'])))
         raw_mask = cv2.resize(raw_mask, dsize=(self.img_size, self.img_size))
         # raw_mask = np.where(raw_mask>100, 1, 0)
-        
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 
 
@@ -185,7 +184,14 @@ class TEELoader(DatasetLoader):
         # raw_mask = np.array((cv2.imread(self.files[idx]['gt'], cv2.IMREAD_GRAYSCALE)))
         raw_mask = np.array(Image.open(self.files[idx]['gt']))
         raw_mask = cv2.resize(raw_mask, dsize=(self.img_size, self.img_size))
-        raw_mask = np.where(raw_mask>100, 1, 0)
+        #print(np.unique(raw_mask, return_counts = True))
+        # TODO: check if this works, im not sure if it does
+        raw_mask = np.where(raw_mask>100, raw_mask, 0)
+        raw_mask = np.where(raw_mask == 120, 2, raw_mask)
+        raw_mask = np.where(raw_mask>200, 3, raw_mask)
+        raw_mask = np.where(raw_mask>100, 1, raw_mask)
+
+
         
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 
