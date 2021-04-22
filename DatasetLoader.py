@@ -8,6 +8,8 @@ from torch.utils.data import Dataset, DataLoader, sampler
 from PIL import Image, ImageOps #bruker vi fortsatt ImageOps?
 #SimpleITK: Open-source multi-dimensional image analysis in Python
 import SimpleITK as sitk
+import albumentations as A
+import cv2
 
 #load data from a folder
 class DatasetLoader(Dataset):
@@ -140,7 +142,14 @@ class ResizedLoader(DatasetLoader):
 
 class TTELoader(DatasetLoader):
     def __init__(self, data_dir, pytorch=True):
+        self.img_size = 384 # må gjøre dette dynamisk
         super().__init__(data_dir)
+
+        
+    
+
+    def create_dict(self, data_dir, Tif_dir=False):
+        
         
     def create_dict(self, data_dir):
         """
@@ -156,6 +165,7 @@ class TTELoader(DatasetLoader):
             for name in files:
                 if name[-7:] == "_gt.mhd":
                     dict_list.append(self.combine_files(root, name))
+                    break
         return dict_list  
 
 
@@ -175,9 +185,9 @@ class TTELoader(DatasetLoader):
 
     # TODO: make sure all the images are of equal size
     def open_as_array(self, idx, invert=False):
-        raw_us = np.stack([self.load_itk(self.files[idx]['gray'])], axis=2)
-        # raw_us = np.array([self.load_itk(self.files[idx]['gray'])])
-
+        raw_us = np.array(self.load_itk(self.files[idx]['gray']))
+        raw_us = cv2.resize(raw_us, dsize=(self.img_size, self.img_size))
+        raw_us = np.stack([raw_us], axis=2)
         
         if invert:
             raw_us = raw_us.transpose((2,0,1))
@@ -188,10 +198,12 @@ class TTELoader(DatasetLoader):
     # TODO: edit this to fit tte
     def open_mask(self, idx, add_dims=False):
         #open mask file
-        raw_mask = (self.load_itk(self.files[idx]['gt']))
+        raw_mask = np.array((self.load_itk(self.files[idx]['gt'])))
+        raw_mask = cv2.resize(raw_mask, dsize=(self.img_size, self.img_size))
         # raw_mask = np.where(raw_mask>100, 1, 0)
         
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
+
 
     def load_itk(self, filename):
         # Reads the image using SimpleITK
@@ -202,4 +214,3 @@ class TTELoader(DatasetLoader):
         # Removes the z-axis and transposes the image
         processed_img_as_array = np.transpose(np.squeeze(img_as_array))
         return processed_img_as_array
-
