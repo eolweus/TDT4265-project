@@ -1,15 +1,21 @@
 import numpy as np
 import torch
 
+#os: provides functions for interacting with the operating system. 
 import os
 from pathlib import Path
 from torch.utils.data import Dataset, DataLoader, sampler
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps #bruker vi fortsatt ImageOps?
+#SimpleITK: Open-source multi-dimensional image analysis in Python
 import SimpleITK as sitk
 
 #load data from a folder
 class DatasetLoader(Dataset):
     def __init__(self, data_dir, pytorch=True):
+    """
+    Args:
+        data_dir: Directory including both gray image directory and ground truth directory.
+    """
         super().__init__()
         
         # Loop through the files in red folder and combine, into a dictionary, the other bands
@@ -17,10 +23,14 @@ class DatasetLoader(Dataset):
         self.pytorch = pytorch
 
     def create_dict(self, data_dir):
+    """
+    Args:
+        data_dir: Directory including both gray image directory and ground truth directory.
+    """
         return
         
     def combine_files(self, gray_file: Path, gt_dir):
-        
+        #combines gray and ground truth files
         files = {'gray': gray_file, 
                  'gt': gt_dir/gray_file.name.replace('gray', 'gt')}
 
@@ -28,7 +38,7 @@ class DatasetLoader(Dataset):
        
                                        
     def __len__(self):
-        #legth of all files to be loaded
+        #length of all files to be loaded
         return len(self.files)
      
     def open_as_array(self, idx, invert=False):
@@ -57,7 +67,7 @@ class DatasetLoader(Dataset):
         
         return x, y
     
-    def get_as_pil(self, idx):
+    def get_as_pil(self, idx): #fjernes?
         #get an image for visualization
         # arr = 256*self.open_as_array(idx)
         arr = 256*self.open_mask(idx)
@@ -67,9 +77,21 @@ class DatasetLoader(Dataset):
 
 class ResizedLoader(DatasetLoader):
     def __init__(self, data_dir, pytorch=True):
+        """
+            Is called when model is initialized.
+            Args:
+                data_dir: Directory including both gray image directory and ground truth directory.
+        """
         super().__init__(data_dir)
 
     def create_dict(self, data_dir):
+        """
+            Loops through the files and combines both gray images and ground truth to a directory.
+            Args:
+                data_dir: Directory including both gray image directory and ground truth directory.
+            Returns:
+                Directory containing both gray images and ground truth.
+        """
         gray_dir, gt_dir = [Path(os.path.join(data_dir, name)) for name in next(os.walk(data_dir))[1]] 
         return [self.combine_files(f, gt_dir) for f in gray_dir.iterdir() if not f.is_dir()]
         
@@ -80,10 +102,6 @@ class ResizedLoader(DatasetLoader):
 
         return files
        
-                                       
-    def __len__(self):
-        #legth of all files to be loaded
-        return len(self.files)
      
     def open_as_array(self, idx, invert=False):
         #open ultrasound data
@@ -125,6 +143,14 @@ class TTELoader(DatasetLoader):
         super().__init__(data_dir)
         
     def create_dict(self, data_dir):
+        """
+        Generates dictionary with paths to TTE images with corresponding ground truth image from the CAMUS dataset.
+        Paths into patient folder and walks through the patients and finds images on type: (['2CH_ED', '2CH_ES','4CH_ED','4CH_ES'])
+        Args:
+            data_dir: Directory including both gray image directory and ground truth directory.
+        Return:
+            dict.list: List containing path to the medical image data and the ground truth data
+        """
         dict_list=[]
         for root, dirs, files in os.walk(data_dir, topdown=True):
             for name in files:
@@ -134,8 +160,15 @@ class TTELoader(DatasetLoader):
 
 
     def combine_files(self, root, gt_file_name):
+        """
+        Match path to ground truth data and remove _gt from gray image path.
+        Args:
+            root: beginning of the folder structure
+            gt_file_name: name of the ground truth data
+        Return:
+            files: dictionary with values for the path to ground truth and gray image data
+        """
         gt_path = os.path.join(root, gt_file_name)
-        
         files = {'gt': gt_path, 
                 'gray': gt_path.replace("_gt", "")}
         return files
