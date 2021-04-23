@@ -29,9 +29,7 @@ def dice_multiclass(predb, yb, smooth=1e5):
 #### Fosskokt, må endres, men brukes intill videre
 def dice_metric(logits, true, eps=1e-7):
     num_classes = logits.shape[1]
-
     logits = torch.eye(num_classes)[logits.argmax(1)].permute(0, 3, 1, 2)
-    
     true_1_hot = torch.eye(num_classes)[true.squeeze(1)]
     true_1_hot = true_1_hot.permute(0, 3, 1, 2).float()
 
