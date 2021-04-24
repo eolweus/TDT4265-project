@@ -40,6 +40,7 @@ cfg.TRAINING.VISUAL_DEBUG = True
 cfg.TRAINING.TRAIN_PARTITION = 2/3
 cfg.TRAINING.EPOCHS = 50
 cfg.TRAINING.USE_CHECKPOINT = False
+cfg.TRAINING.EARLY_STOP_COUNT = 5
 
 # ------------------------------------------------------------
 
