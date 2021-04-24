@@ -55,14 +55,13 @@ def start_train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1)
     checkpointer = CheckPointer(
         model, optimizer, save_folder, save_to_disk, logger,
         )
-    # extra_checkpoint_data = checkpointer.load() # Load last checkpoint
-    # arguments.update(extra_checkpoint_data) 
-    ####
+    if cfg.TRAINING.USE_CHECKPOINT:
+        extra_checkpoint_data = checkpointer.load() # Load last checkpoint
+        arguments.update(extra_checkpoint_data) 
     
     # The trainer has been moved to trainer.py
     train_loss, valid_loss = do_train(model,train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs, checkpointer, arguments)
     return train_loss, valid_loss
-
 
 def batch_to_img(xb, idx):
     img = np.array(xb[idx,0:3])

@@ -39,6 +39,7 @@ cfg.TRAINING = CN()
 cfg.TRAINING.VISUAL_DEBUG = True
 cfg.TRAINING.TRAIN_PARTITION = 2/3
 cfg.TRAINING.EPOCHS = 50
+cfg.TRAINING.USE_CHECKPOINT = False
 
 # ------------------------------------------------------------
 
