@@ -17,6 +17,7 @@ from DatasetLoader import DatasetLoader, TTELoader, ResizedLoader, TEELoader
 from utils.checkpoint import CheckPointer
 from utils.logger import setup_logger
 from utils.dice import dice_metric as dice_score
+import utils.plotter as plotter
 from trainer import do_train
 from Unet2D import Unet2D
 
@@ -71,10 +72,45 @@ def predb_to_mask(predb, idx):
     p = torch.functional.F.softmax(predb[idx], 0)
     return p.argmax(0).cpu()
 
-def main ():
+def run_visual_debug():
+    raise NotImplementedError
 
+# TODO: fix this function
+def evauate_and_log_results(logger):
+    image = reader.Execute();
+    logger.info('Start evaluating on TTE data...')
+    torch.cuda.empty_cache()  # speed up evaluating after training finished
+    result = do_evaluation(test_data, unet, dice_score)
+    logger.info("Evaluation result: {}".format(result))
+    
+    logger.info('Start evaluating on TEE data...')
+    torch.cuda.empty_cache()  # speed up evaluating after training finished
+    result = do_evaluation(tee_test_data, unet, dice_score)
+    logger.info("Evaluation result: {}".format(result))
+
+def get_dataset_path(): 
+    paths = {
+        "TTE": TTE_FULL_BASE_PATH,
+        "TEE": TEE_BASE_PATH,
+        "RESIZED": TTE_BASE_PATH,
+        "TTE_TEST": TTE_FULL_TEST_BASE_PATH
+    }
+    assert cfg.DATASET in paths.keys()
+    return paths[cfg.DATASET.upper()]
+
+def create_dataloader(use_transforms=False):
+    loaders = {
+        "TTE": TTELoader,
+        "TEE": TEELoader,
+        "RESIZED": ResizedLoader,
+        "TTE_TEST": TTELoader
+    }
+    assert cfg.DATASET in loaders.keys()
+    return loaders[cfg.DATASET](get_dataset_path(), use_transforms)
+
+def main ():
     #create logger
-    output_dir = pathlib.Path("outputs")
+    output_dir = pathlib.Path(cfg.OUTPUT_DIR)
     output_dir.mkdir(exist_ok=True, parents=True)
     logger = setup_logger("U", "logs")
     logger.info("Loaded configuration file {}".format(cfg))
@@ -87,25 +123,15 @@ def main ():
     # sets the matplotlib display backend (most likely not needed)
     # mp.use('TkAgg', force=True)
 
-    # base_path = Path(TTE_BASE_PATH)
-    # data = ResizedLoader(base_path)
-
-    base_path = Path(TTE_FULL_BASE_PATH)
-    test_path = Path(TTE_FULL_TEST_BASE_PATH)
-    tee_path  = Path(TEE_BASE_PATH)
-    # data = TTELoader(base_path, True)
-    # test_dataset = TTELoader(test_path, True)
-    tee_data = TEELoader(tee_path, True)
-    data = tee_data
+    data = create_dataloader()
 
     #split the training dataset and initialize the data loaders
     print("Train Data length: {}".format(len(data)))
-    # print("Test Data length: {}".format(len(test_dataset)))    
-    train_partition = 2*len(tee_data)//3
-    val_partition = len(tee_data)-train_partition
+    train_partition = int(cfg.TRAIN_PARTITION*len(data))
+    val_partition = len(data)-train_partition
 
     # split the training dataset and initialize the data loaders
-    train_dataset, valid_dataset = torch.utils.data.random_split(tee_data, (train_partition, val_partition))
+    train_dataset, valid_dataset = torch.utils.data.random_split(data, (train_partition, val_partition))
     train_data = DataLoader(train_dataset, batch_size=bs, shuffle=True)
     valid_data = DataLoader(valid_dataset, batch_size=bs, shuffle=True)
     # test_data = DataLoader(test_dataset, batch_size=test_bs, shuffle=True)
@@ -114,76 +140,39 @@ def main ():
     # TODO: set up test set
 
     # TODO: rotation of tee is implemented in getitem, not in open_as_array
-    # TODO: check if you can visualize a TEE mask
+    # TODO: check if you can visualize a rotated TEE mask
     if cfg.VISUAL_DEBUG:
-        fig, ax = plt.subplots(1,2)
-        ax[0].imshow(data.open_as_array(5))
-        ax[1].imshow(data.open_mask(5))
-        plt.show()
+        plotter.plot_image_and_mask(data, 1)
     xb, yb = next(iter(train_data))
     print (xb.shape, yb.shape)
 
-    # build the Unet2D with one channel as input and 2 channels as output
+    # build the Unet2D with one channel as input and 4 channels as output
     
     unet = Unet2D(1,4)
     # logger.info(unet)
     
     #loss function and optimizer
     loss_fn = nn.CrossEntropyLoss()
-    opt = torch.optim.Adam(unet.parameters(), lr=cfg.LEARN_RATE)
+    opt = torch.optim.Adam(unet.parameters(), lr=lr)
 
     #do some training 
     train_loss, valid_loss = start_train(unet, train_data, valid_data, loss_fn, opt, dice_score, epochs=epochs)
     
     # Evaluate networke(f)
-    # image = reader.Execute();
-    logger.info('Start evaluating on TTE data...')
-    torch.cuda.empty_cache()  # speed up evaluating after training finished
-    # result = do_evaluation(test_data, unet, dice_score)
-    logger.info("Evaluation result: {}".format(result))
-    
-    logger.info('Start evaluating on TEE data...')
-    torch.cuda.empty_cache()  # speed up evaluating after training finished
-    # result = do_evaluation(tee_test_data, unet, dice_score)
-    logger.info("Evaluation result: {}".format(result))
+    # evauate_and_log_results()
 
-    #plot training and validation losses
+    # plot training and validation losses
     if cfg.VISUAL_DEBUG:
-        plt.figure(figsize=(10,8))
-        plt.plot(train_loss, label='Train loss')
-        plt.plot(valid_loss, label='Valid loss')
-        plt.legend()
-        plt.show()
+        plotter.plot_train_and_val_loss(train_loss, valid_loss)
 
-    #predict on the next train batch (is this fair?)
-    xb, yb = next(iter(train_data))
-    with torch.no_grad():
-        predb = unet(xb.cuda())
-
-    #show the predicted segmentations
+    # show the predicted segmentations
     if cfg.VISUAL_DEBUG:
-        fig, ax = plt.subplots(bs,3, figsize=(15,bs*5))
-        for i in range(bs):
-            ax[i,0].imshow(batch_to_img(xb,i))
-            ax[i,1].imshow(yb[i])
-            ax[i,2].imshow(predb_to_mask(predb, i))
+        plotter.predict_on_batch_and_plot(train_data, unet)
 
-        plt.show()
-        
-    #predict on the next train batch (is this fair?)
-    # xb, yb = next(iter(tee_test_data))
-    # with torch.no_grad():
-    #     predb = unet(xb.cuda())
+    # TODO: add test parameter to config
+    # if cfg.VISUAL_DEBUG and cfg.TEST:
+    #     plotter.predict_on_batch_and_plot(tee_test_data)
 
-    #show the predicted segmentations
-    if cfg.VISUAL_DEBUG:
-        fig, ax = plt.subplots(test_bs,3, figsize=(15,test_bs*5))
-        for i in range(test_bs):
-            ax[i,0].imshow(batch_to_img(xb,i))
-            ax[i,1].imshow(yb[i])
-            ax[i,2].imshow(predb_to_mask(predb, i))
-
-        plt.show()
 
 if __name__ == "__main__": 
     main()

@@ -34,7 +34,7 @@ cfg.SOLVER.LR = 0.01
 # -----------------------------------------------------------------------------
 cfg.INPUT = CN()
 # Image size
-cfg.INPUT.IMAGE_SIZE = [300, 300]
+cfg.INPUT.IMAGE_SIZE = (384, 384)
 
 # ------------------------------------------------------------
 
@@ -49,4 +49,5 @@ cfg.TRAIN_PARTITION = 2/3
 cfg.DATASET = "TTE"
 
 cfg.OUTPUT_DIR = "./outputs"
+cfg.LOG_DIR = "./logs"
 # total train data = 450

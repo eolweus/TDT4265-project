@@ -8,6 +8,7 @@ from PIL import Image, ImageOps
 import SimpleITK as sitk
 import albumentations as A
 import cv2
+from configs import cfg
 
 from augmentation import Augmenter
 
@@ -95,7 +96,8 @@ class ResizedLoader(DatasetLoader):
 
 class TTELoader(DatasetLoader):
     def __init__(self, data_dir, use_transforms=False, pytorch=True):
-        self.img_size = 384 # må gjøre dette dynamisk
+        # self.img_size = 384 # må gjøre dette dynamisk
+        self.img_size = cfg.INPUT.IMAGE_SIZE
         super().__init__(data_dir, use_transforms=use_transforms)    
 
     def create_dict(self, data_dir, Tif_dir=False):
@@ -117,7 +119,7 @@ class TTELoader(DatasetLoader):
     # TODO: make sure all the images are of equal size
     def open_as_array(self, idx, invert=False):
         raw_us = np.array(self.load_itk(self.files[idx]['gray']))
-        raw_us = cv2.resize(raw_us, dsize=(self.img_size, self.img_size))
+        raw_us = cv2.resize(raw_us, dsize=self.img_size)
         raw_us = np.stack([raw_us], axis=2)
         
         if invert:
@@ -130,7 +132,7 @@ class TTELoader(DatasetLoader):
     def open_mask(self, idx, add_dims=False):
         #open mask file
         raw_mask = np.array((self.load_itk(self.files[idx]['gt'])))
-        raw_mask = cv2.resize(raw_mask, dsize=(self.img_size, self.img_size))
+        raw_mask = cv2.resize(raw_mask, dsize=self.img_size)
         # raw_mask = np.where(raw_mask>100, 1, 0)
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 
@@ -187,8 +189,7 @@ class TEELoader(DatasetLoader):
         #print(np.unique(raw_mask, return_counts = True))
         # TODO: check if this works, im not sure if it does
         raw_mask = np.where(raw_mask>100, raw_mask, 0)
-        raw_mask = np.where(raw_mask == 120, 2, raw_mask)
-        raw_mask = np.where(raw_mask>200, 3, raw_mask)
+        raw_mask = np.where(raw_mask>200, 2, raw_mask)
         raw_mask = np.where(raw_mask>100, 1, raw_mask)
 
 
