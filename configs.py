@@ -6,13 +6,11 @@ cfg = CN()
 
 cfg.MODEL = CN()
 
-# match default boxes to any ground truth with jaccard overlap higher than a threshold (0.5)
-cfg.MODEL.NUM_CLASSES = 4
 cfg.MODEL.INPUT_CHANNELS = 1
-
+cfg.MODEL.NUM_CLASSES = 4
 
 # ---------------------------------------------------------------------------- #
-# Backbone
+# Backbone  
 # ---------------------------------------------------------------------------- #
 cfg.MODEL.BACKBONE = CN()
 
@@ -26,7 +24,7 @@ cfg.SOLVER = CN()
 # train configs
 cfg.SOLVER.BATCH_SIZE = 12
 cfg.SOLVER.TEST_BATCH_SIZE = 6
-cfg.SOLVER.LR = 0.01
+cfg.SOLVER.LEARN_RATE = 0.01
 
 # -----------------------------------------------------------------------------
 # INPUT
