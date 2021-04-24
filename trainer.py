@@ -99,7 +99,7 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, epochs, chec
                         lowest_val_loss = epoch_loss
                         es_stop_counter = 0
 
-                if es_stop_counter >= 3: 
+                if es_stop_counter >= cfg.TRAINING.EARLY_STOP_COUNT: 
                     print("Early stopping at epoch", epoch)
                     time_elapsed = time.time() - start_training_time
                     print('Time elapsed: {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)) 
@@ -122,5 +122,3 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, epochs, chec
     total_time_str = str(datetime.timedelta(seconds=total_training_time))
     logger.info("Total training time: {} ({:.4f} s / it)".format(total_time_str, total_training_time / max_iter))
     return train_loss, valid_loss    
-
-

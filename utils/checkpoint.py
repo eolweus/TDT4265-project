@@ -10,10 +10,10 @@ class CheckPointer:
     def __init__(self,
                  model,
                  optimizer=None,
-                 save_dir="",
                  save_to_disk=None,
                  logger=None,
-                 scheduler=None,):
+                 scheduler=None,
+                 save_dir=cfg.OUTPUT_DIR):
         self.model = model
         self.optimizer = optimizer
         self.scheduler = scheduler

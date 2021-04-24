@@ -10,10 +10,13 @@ from PIL import Image, ImageOps #bruker vi fortsatt ImageOps?
 import SimpleITK as sitk
 import albumentations as A
 import cv2
+from configs import cfg
+
+from augmentation import Augmenter
 
 #load data from a folder
 class DatasetLoader(Dataset):
-    def __init__(self, data_dir, pytorch=True):
+    def __init__(self, data_dir, use_transforms=False, pytorch=True):
     """
     Args:
         data_dir: Directory including both gray image directory and ground truth directory.
@@ -23,6 +26,8 @@ class DatasetLoader(Dataset):
         # Loop through the files in red folder and combine, into a dictionary, the other bands
         self.files = self.create_dict(data_dir)
         self.pytorch = pytorch
+        self.use_transforms = use_transforms
+        self.augmenter = Augmenter()
 
     def create_dict(self, data_dir):
     """
@@ -32,59 +37,47 @@ class DatasetLoader(Dataset):
         return
         
     def combine_files(self, gray_file: Path, gt_dir):
-        #combines gray and ground truth files
-        files = {'gray': gray_file, 
-                 'gt': gt_dir/gray_file.name.replace('gray', 'gt')}
-
-        return files
-       
+        return
                                        
     def __len__(self):
         #length of all files to be loaded
         return len(self.files)
      
     def open_as_array(self, idx, invert=False):
-        #open ultrasound data
-        raw_us = np.stack([np.array(Image.open(self.files[idx]['gray'])),
-                           ], axis=2)
+        return
     
-        if invert:
-            raw_us = raw_us.transpose((2,0,1))
-    
-        # normalize
-        return (raw_us / np.iinfo(raw_us.dtype).max)
-    
-
     def open_mask(self, idx, add_dims=False):
-        #open mask file
-        raw_mask = np.array(Image.open(self.files[idx]['gt']))
-        raw_mask = np.where(raw_mask>100, 1, 0)
-        
-        return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
+        return
     
     def __getitem__(self, idx):
         #get the image and mask as arrays
-        x = torch.tensor(self.open_as_array(idx, invert=self.pytorch), dtype=torch.float32)
-        y = torch.tensor(self.open_mask(idx, add_dims=False), dtype=torch.torch.int64)
-        
+        img_as_array = self.open_as_array(idx, invert=self.pytorch)
+        mask_as_array = self.open_mask(idx, add_dims=False)
+
+        if self.use_transforms:
+            img_as_array, mask_as_array = self.augmenter.augment_image(image=img_as_array, mask=mask_as_array)
+
+        # squeeze makes sure we get the right shape for the mask
+        x = torch.tensor(img_as_array, dtype=torch.float32)
+        y = torch.tensor(np.squeeze(mask_as_array), dtype=torch.torch.int64)
+
         return x, y
     
     def get_as_pil(self, idx): #fjernes?
         #get an image for visualization
-        # arr = 256*self.open_as_array(idx)
         arr = 256*self.open_mask(idx)
         
         return Image.fromarray(arr.astype(np.uint8), 'RGB')
 
 
 class ResizedLoader(DatasetLoader):
-    def __init__(self, data_dir, pytorch=True):
+    def __init__(self, data_dir, use_transforms=False, pytorch=True):
         """
             Is called when model is initialized.
             Args:
                 data_dir: Directory including both gray image directory and ground truth directory.
         """
-        super().__init__(data_dir)
+        super().__init__(data_dir, use_transforms=use_transforms)
 
     def create_dict(self, data_dir):
         """
@@ -103,7 +96,6 @@ class ResizedLoader(DatasetLoader):
                  'gt': gt_dir/gray_file.name.replace('gray', 'gt')}
 
         return files
-       
      
     def open_as_array(self, idx, invert=False):
         #open ultrasound data
@@ -115,7 +107,6 @@ class ResizedLoader(DatasetLoader):
     
         # normalize
         return (raw_us / np.iinfo(raw_us.dtype).max)
-    
 
     def open_mask(self, idx, add_dims=False):
         #open mask file
@@ -123,34 +114,14 @@ class ResizedLoader(DatasetLoader):
         raw_mask = np.where(raw_mask>100, 1, 0)
         
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
-    
-    def __getitem__(self, idx):
-        #get the image and mask as arrays
-        x = torch.tensor(self.open_as_array(idx, invert=self.pytorch), dtype=torch.float32)
-        y = torch.tensor(self.open_mask(idx, add_dims=False), dtype=torch.torch.int64)
-        
-        return x, y
-    
-    def get_as_pil(self, idx):
-        #get an image for visualization
-        # arr = 256*self.open_as_array(idx)
-        arr = 256*self.open_mask(idx)
-        
-        return Image.fromarray(arr.astype(np.uint8), 'RGB')
-
 
 
 class TTELoader(DatasetLoader):
-    def __init__(self, data_dir, pytorch=True):
-        self.img_size = 384 # må gjøre dette dynamisk
-        super().__init__(data_dir)
-
-        
-    
-
-    def create_dict(self, data_dir, Tif_dir=False):
-        
-        
+    def __init__(self, data_dir, use_transforms=False, pytorch=True):
+        # self.img_size = 384 # må gjøre dette dynamisk
+        self.img_size = cfg.INPUT.IMAGE_SIZE
+        super().__init__(data_dir, use_transforms=use_transforms)    
+ 
     def create_dict(self, data_dir):
         """
         Generates dictionary with paths to TTE images with corresponding ground truth image from the CAMUS dataset.
@@ -165,7 +136,6 @@ class TTELoader(DatasetLoader):
             for name in files:
                 if name[-7:] == "_gt.mhd":
                     dict_list.append(self.combine_files(root, name))
-                    break
         return dict_list  
 
 
@@ -186,7 +156,7 @@ class TTELoader(DatasetLoader):
     # TODO: make sure all the images are of equal size
     def open_as_array(self, idx, invert=False):
         raw_us = np.array(self.load_itk(self.files[idx]['gray']))
-        raw_us = cv2.resize(raw_us, dsize=(self.img_size, self.img_size))
+        raw_us = cv2.resize(raw_us, dsize=self.img_size)
         raw_us = np.stack([raw_us], axis=2)
         
         if invert:
@@ -199,9 +169,8 @@ class TTELoader(DatasetLoader):
     def open_mask(self, idx, add_dims=False):
         #open mask file
         raw_mask = np.array((self.load_itk(self.files[idx]['gt'])))
-        raw_mask = cv2.resize(raw_mask, dsize=(self.img_size, self.img_size))
+        raw_mask = cv2.resize(raw_mask, dsize=self.img_size)
         # raw_mask = np.where(raw_mask>100, 1, 0)
-        
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 
 
@@ -214,3 +183,68 @@ class TTELoader(DatasetLoader):
         # Removes the z-axis and transposes the image
         processed_img_as_array = np.transpose(np.squeeze(img_as_array))
         return processed_img_as_array
+    
+
+class TEELoader(DatasetLoader):
+    def __init__(self, data_dir, use_transforms=False, pytorch=True):
+        self.img_size = 384 # må gjøre dette dynamisk
+        super().__init__(data_dir, use_transforms=use_transforms)        
+    
+    def create_dict(self, data_dir, Tif_dir=False):
+        dict_list=[]
+        for root, dirs, files in os.walk(data_dir, topdown=True):
+            for name in files:
+                 if name[:5] == "gray_":
+                    dict_list.append(self.combine_files(root, name))
+        return dict_list  
+
+    def combine_files(self, root, gt_file_name):
+        gray_path = os.path.join(root, gt_file_name)
+        gt_path = gray_path.replace("gray_", "gt_gt_")
+        gt_path = gt_path.replace(".jpg", ".tif")
+        gt_path = gt_path.replace("/train_gray/", "/train_gt/")
+        files = {'gt': gt_path, 
+                'gray': gray_path}
+        return files
+
+    def open_as_array(self, idx, invert=False):
+        raw_us = np.array(Image.open(self.files[idx]['gray']))
+        raw_us = cv2.resize(raw_us, dsize=(self.img_size, self.img_size))
+        raw_us = np.stack([raw_us], axis=2)
+        
+        if invert:
+            raw_us = raw_us.transpose((2,0,1))
+    
+        # normalize
+        return (raw_us / np.iinfo(raw_us.dtype).max)
+
+    def open_mask(self, idx, add_dims=False):
+        #open mask file
+        # raw_mask = np.array((cv2.imread(self.files[idx]['gt'], cv2.IMREAD_GRAYSCALE)))
+        raw_mask = np.array(Image.open(self.files[idx]['gt']))
+        raw_mask = cv2.resize(raw_mask, dsize=(self.img_size, self.img_size))
+        #print(np.unique(raw_mask, return_counts = True))
+        # TODO: check if this works, im not sure if it does
+        raw_mask = np.where(raw_mask>100, raw_mask, 0)
+        raw_mask = np.where(raw_mask>200, 2, raw_mask)
+        raw_mask = np.where(raw_mask>100, 1, raw_mask)
+
+
+        
+        return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
+
+
+    def __getitem__(self, idx):
+        #get the image and mask as arrays
+        img_as_array = self.open_as_array(idx, invert=self.pytorch)
+        mask_as_array = self.open_mask(idx, add_dims=False)
+        img_as_array, mask_as_array = self.augmenter.rotate_image90(image=img_as_array, mask=mask_as_array)
+
+        if self.use_transforms:
+            img_as_array, mask_as_array = self.augmenter.augment_image(image=img_as_array, mask=mask_as_array)
+
+        x = torch.tensor(img_as_array, dtype=torch.float32)
+        # squeeze makes sure we get the right shape for the mask
+        y = torch.tensor(np.squeeze(mask_as_array), dtype=torch.torch.int64)
+
+        return x, y

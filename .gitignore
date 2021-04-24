@@ -140,4 +140,10 @@ outputs/
 # Data
 Data/
 
+# Logs
 logs/
+
+**log.txt
+
+# Run file
+run.ipynb
