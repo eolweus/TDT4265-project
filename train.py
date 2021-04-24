@@ -62,17 +62,6 @@ def start_train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1)
     train_loss, valid_loss = do_train(model,train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs, checkpointer, arguments)
     return train_loss, valid_loss
 
-def batch_to_img(xb, idx):
-    img = np.array(xb[idx,0:3])
-    return img.transpose((1,2,0))
-
-def predb_to_mask(predb, idx):
-    p = torch.functional.F.softmax(predb[idx], 0)
-    return p.argmax(0).cpu()
-
-def run_visual_debug():
-    raise NotImplementedError
-
 def evauate_and_log_results(logger, unet, tte_test_data, tee_test_data):
     # image = reader.Execute();
     logger.info('Start evaluating on TTE data...')
@@ -124,7 +113,7 @@ def main ():
     # mp.use('TkAgg', force=True)
 
     data = create_dataset()
-    tte_test_data, tee_test_data = load_test_data()
+    tte_test_dataset, tee_test_dataset = load_test_data()
 
     #split the training dataset and initialize the data loaders
     print("Train Data length: {}".format(len(data)))
@@ -135,8 +124,8 @@ def main ():
     train_dataset, valid_dataset = torch.utils.data.random_split(data, (train_partition, val_partition))
     train_data = DataLoader(train_dataset, batch_size=bs, shuffle=True)
     valid_data = DataLoader(valid_dataset, batch_size=bs, shuffle=True)
-    # test_data = DataLoader(test_dataset, batch_size=test_bs, shuffle=True)
-    # tee_test_data = DataLoader(tee_data, batch_size=test_bs, shuffle=True)
+    test_data = DataLoader(tte_test_dataset, batch_size=test_bs, shuffle=True)
+    tee_test_data = DataLoader(tee_test_dataset, batch_size=test_bs, shuffle=True)
 
     # TODO: set up test set
 

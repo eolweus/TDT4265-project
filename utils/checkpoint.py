@@ -2,6 +2,7 @@ import logging
 import os
 import torch
 from utils.model_zoo import cache_url
+from configs import cfg
 
 
 class CheckPointer:

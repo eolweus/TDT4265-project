@@ -17,10 +17,10 @@ from augmentation import Augmenter
 #load data from a folder
 class DatasetLoader(Dataset):
     def __init__(self, data_dir, use_transforms=False, pytorch=True):
-    """
-    Args:
-        data_dir: Directory including both gray image directory and ground truth directory.
-    """
+        """
+        Args:
+            data_dir: Directory including both gray image directory and ground truth directory.
+        """
         super().__init__()
         
         # Loop through the files in red folder and combine, into a dictionary, the other bands
@@ -30,10 +30,10 @@ class DatasetLoader(Dataset):
         self.augmenter = Augmenter()
 
     def create_dict(self, data_dir):
-    """
-    Args:
-        data_dir: Directory including both gray image directory and ground truth directory.
-    """
+        """
+        Args:
+            data_dir: Directory including both gray image directory and ground truth directory.
+        """
         return
         
     def combine_files(self, gray_file: Path, gt_dir):

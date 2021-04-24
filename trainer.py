@@ -6,7 +6,7 @@ import time
 import torch
 import torch.utils.tensorboard
 import numpy as np
-import configs as cfg
+from configs import cfg
 
 
 def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, epochs, checkpointer, arguments):
