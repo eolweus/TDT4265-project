@@ -1,8 +1,9 @@
 import torch
 from torch import nn
+from configs import cfg
 
 class Unet2D(nn.Module):
-    def __init__(self, in_channels, out_channels):
+    def __init__(self, in_channels=cfg.MODEL.INPUT_CHANNELS, out_channels=cfg.MODEL.NUM_CLASSES):
         super().__init__()
 
         self.conv1 = self.contract_block(in_channels, 32, 7, 3)

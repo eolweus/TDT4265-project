@@ -76,8 +76,8 @@ def run_visual_debug():
     raise NotImplementedError
 
 # TODO: fix this function
-def evauate_and_log_results(logger):
-    image = reader.Execute();
+def evauate_and_log_results(logger, ):
+    # image = reader.Execute();
     logger.info('Start evaluating on TTE data...')
     torch.cuda.empty_cache()  # speed up evaluating after training finished
     result = do_evaluation(test_data, unet, dice_score)
@@ -91,22 +91,25 @@ def evauate_and_log_results(logger):
 def get_dataset_path(): 
     paths = {
         "TTE": TTE_FULL_BASE_PATH,
-        "TEE": TEE_BASE_PATH,
         "RESIZED": TTE_BASE_PATH,
-        "TTE_TEST": TTE_FULL_TEST_BASE_PATH
     }
-    assert cfg.DATASET in paths.keys()
+    assert cfg.DATASET in paths.keys()\
+        , print("ASSERTION ERROR: config dataset value is not a dataset")
     return paths[cfg.DATASET.upper()]
 
-def create_dataloader(use_transforms=False):
+def create_dataset(use_transforms=False):
     loaders = {
         "TTE": TTELoader,
-        "TEE": TEELoader,
         "RESIZED": ResizedLoader,
-        "TTE_TEST": TTELoader
     }
-    assert cfg.DATASET in loaders.keys()
+    assert cfg.DATASET in loaders.keys()\
+        , print("ASSERTION ERROR: config dataset value is not a dataset")
     return loaders[cfg.DATASET](get_dataset_path(), use_transforms)
+
+def load_test_data():
+    tte_test_data = TTELoader(TTE_FULL_TEST_BASE_PATH)
+    tee_test_data = TEELoader(TEE_BASE_PATH)
+    return tte_test_data, tee_test_data
 
 def main ():
     #create logger
@@ -115,19 +118,20 @@ def main ():
     logger = setup_logger("U", "logs")
     logger.info("Loaded configuration file {}".format(cfg))
 
-    lr = cfg.LEARN_RATE
-    bs = cfg.BATCH_SIZE
-    test_bs = cfg.TEST_BATCH_SIZE
-    epochs = cfg.EPOCHS
+    lr = cfg.SOLVER.LEARN_RATE
+    bs = cfg.SOLVER.BATCH_SIZE
+    test_bs = cfg.SOLVER.TEST_BATCH_SIZE
+    epochs = cfg.TRAINING.EPOCHS
     
     # sets the matplotlib display backend (most likely not needed)
     # mp.use('TkAgg', force=True)
 
-    data = create_dataloader()
+    data = create_dataset()
+    tte_test_data, tee_test_data = load_test_data()
 
     #split the training dataset and initialize the data loaders
     print("Train Data length: {}".format(len(data)))
-    train_partition = int(cfg.TRAIN_PARTITION*len(data))
+    train_partition = int(cfg.TRAINING.TRAIN_PARTITION*len(data))
     val_partition = len(data)-train_partition
 
     # split the training dataset and initialize the data loaders
@@ -141,14 +145,14 @@ def main ():
 
     # TODO: rotation of tee is implemented in getitem, not in open_as_array
     # TODO: check if you can visualize a rotated TEE mask
-    if cfg.VISUAL_DEBUG:
+    if cfg.TRAINING.VISUAL_DEBUG:
         plotter.plot_image_and_mask(data, 1)
     xb, yb = next(iter(train_data))
     print (xb.shape, yb.shape)
 
-    # build the Unet2D with one channel as input and 4 channels as output
+    # build the Unet2D with default input and output channels as given by config
     
-    unet = Unet2D(1,4)
+    unet = Unet2D()
     # logger.info(unet)
     
     #loss function and optimizer
@@ -162,15 +166,15 @@ def main ():
     # evauate_and_log_results()
 
     # plot training and validation losses
-    if cfg.VISUAL_DEBUG:
+    if cfg.TRAINING.VISUAL_DEBUG:
         plotter.plot_train_and_val_loss(train_loss, valid_loss)
 
     # show the predicted segmentations
-    if cfg.VISUAL_DEBUG:
+    if cfg.TRAINING.VISUAL_DEBUG:
         plotter.predict_on_batch_and_plot(train_data, unet)
 
     # TODO: add test parameter to config
-    # if cfg.VISUAL_DEBUG and cfg.TEST:
+    # if cfg.TRAINING.VISUAL_DEBUG and cfg.TEST:
     #     plotter.predict_on_batch_and_plot(tee_test_data)
 
 

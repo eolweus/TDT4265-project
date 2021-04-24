@@ -141,7 +141,7 @@ outputs/
 Data/
 
 # Logs
-**logs/
+**/logs/
 
 # Run file
 run.ipynb
