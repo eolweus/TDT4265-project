@@ -75,12 +75,11 @@ def predb_to_mask(predb, idx):
 def run_visual_debug():
     raise NotImplementedError
 
-# TODO: fix this function
-def evauate_and_log_results(logger, ):
+def evauate_and_log_results(logger, unet, tte_test_data, tee_test_data):
     # image = reader.Execute();
     logger.info('Start evaluating on TTE data...')
     torch.cuda.empty_cache()  # speed up evaluating after training finished
-    result = do_evaluation(test_data, unet, dice_score)
+    result = do_evaluation(tte_test_data, unet, dice_score)
     logger.info("Evaluation result: {}".format(result))
     
     logger.info('Start evaluating on TEE data...')
@@ -163,7 +162,7 @@ def main ():
     train_loss, valid_loss = start_train(unet, train_data, valid_data, loss_fn, opt, dice_score, epochs=epochs)
     
     # Evaluate networke(f)
-    # evauate_and_log_results()
+    evauate_and_log_results(logger, unet, tte_test_data, tee_test_data)
 
     # plot training and validation losses
     if cfg.TRAINING.VISUAL_DEBUG:

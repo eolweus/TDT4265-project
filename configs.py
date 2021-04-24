@@ -1,6 +1,4 @@
 from yacs.config import CfgNode as CN
-from decouple import config
-
 
 cfg = CN()
 
