@@ -48,13 +48,12 @@ def start_train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1)
     model.cuda()
     
     ### Setup for checkpointing
-    save_folder = "outputs"
     logger = logging.getLogger('U.trainer')
     arguments = {"epoch": 0, "step": 0}
     save_to_disk = True
     checkpointer = CheckPointer(
-        model, optimizer, save_folder, save_to_disk, logger,
-        )
+        model, optimizer, save_to_disk, logger
+    )
     if cfg.TRAINING.USE_CHECKPOINT:
         extra_checkpoint_data = checkpointer.load() # Load last checkpoint
         arguments.update(extra_checkpoint_data) 

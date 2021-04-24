@@ -8,7 +8,6 @@ from pathlib import Path
 def setup_logger(name, save_dir=cfg.LOG_DIR):
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
-    # save_dir = save_dir+"/log"
     # don't log results for the non-master process
     stream_handler = logging.StreamHandler(stream=sys.stdout)
     stream_handler.setLevel(logging.DEBUG)

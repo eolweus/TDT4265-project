@@ -31,3 +31,4 @@ def plot_image_and_mask(data, idx):
     ax[0].imshow(data.open_as_array(idx))
     ax[1].imshow(data.open_mask(idx))
     plt.show()
+    
