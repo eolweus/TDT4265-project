@@ -51,8 +51,10 @@ def do_evaluation(data, model, dice_fn):
 def start_train(model, train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epochs=1):
     model.cuda()
     
-    ### Setup for checkpointing
     logger = logging.getLogger('U.trainer')
+
+    ### Setup for checkpointing
+    # Adds loss and dice history to checkpoints for plotting purposes
     arguments = {"epoch": 0, "step": 0, "train_loss": [], "valid_loss": [], 'valid_dice': [],'valid_dice_per_class':np.array([]), 'pixel_acc': []}
     save_to_disk = True
     checkpointer = CheckPointer(
@@ -62,7 +64,7 @@ def start_train(model, train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, 
         extra_checkpoint_data = checkpointer.load() # Load last checkpoint
         arguments.update(extra_checkpoint_data) 
     
-    # The trainer has been moved to trainer.py
+    # The training logic has been moved to trainer.py
     train_loss, valid_loss, valid_dice, valid_dice_per_class, pixel_acc = do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epochs, checkpointer, arguments)
     return train_loss, valid_loss, valid_dice, valid_dice_per_class, pixel_acc
 
@@ -172,7 +174,7 @@ def main ():
     #do some training 
     train_loss, valid_loss, valid_dice, valid_dice_per_class, pixel_acc = start_train(unet, train_data, valid_data, loss_fn, opt, dice_multiclass, acc_metric, epochs=epochs)
     
-    # Evaluate networke(f)
+    # Evaluate network(f)
     evauate_and_log_results(logger, unet, tte_test_data, tee_test_data)
 
     # plot training and validation losses
@@ -183,7 +185,6 @@ def main ():
     if cfg.TRAINING.VISUAL_DEBUG:
         plotter.plot_acc_history(pixel_acc)
         
-        
     # plot validation dice
     if cfg.TRAINING.VISUAL_DEBUG:
         plotter.plot_dice_history(valid_dice_per_class)
@@ -192,7 +193,6 @@ def main ():
     if cfg.TRAINING.VISUAL_DEBUG:
         plotter.predict_on_batch_and_plot(tte_test_data, unet, test_bs)
 
-    # TODO: add test parameter to config
     if cfg.TRAINING.VISUAL_DEBUG:
         plotter.predict_on_batch_and_plot(tee_test_data, unet, test_bs)
 

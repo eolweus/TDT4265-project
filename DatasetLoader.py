@@ -135,7 +135,6 @@ class TTELoader(DatasetLoader):
             for name in files:
                 if name[-7:] == "_gt.mhd":
                     dict_list.append(self.combine_files(root, name))
-                    break
         return dict_list  
 
 

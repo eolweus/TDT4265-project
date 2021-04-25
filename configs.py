@@ -21,7 +21,7 @@ cfg.MODEL.BACKBONE.OUTPUT_CHANNELS = 128
 cfg.SOLVER = CN()
 # train configs
 cfg.SOLVER.BATCH_SIZE = 10
-cfg.SOLVER.TEST_BATCH_SIZE = 5 # has to be divisible by fifty
+cfg.SOLVER.TEST_BATCH_SIZE = 5 
 cfg.SOLVER.LEARN_RATE = 0.01
 
 # -----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ cfg.TRAINING = CN()
 cfg.TRAINING.VISUAL_DEBUG = True
 cfg.TRAINING.TRAIN_PARTITION = 2/3
 cfg.TRAINING.EPOCHS = 50
-cfg.TRAINING.USE_CHECKPOINT = True
+cfg.TRAINING.USE_CHECKPOINT = False
 cfg.TRAINING.EARLY_STOP_COUNT = 5
 cfg.TRAINING.USE_TRANSFORMS = False
 

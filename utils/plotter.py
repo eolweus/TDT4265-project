@@ -5,7 +5,6 @@ import torch
 from augmentation import Augmenter
 
 
-
 def plot_dice_history(dice_per_class):
     plt.figure(figsize=(10,8))
     print(dice_per_class[-12:])
@@ -20,7 +19,6 @@ def plot_acc_history(pixel_acc):
     plt.plot(pixel_acc, label='Validation Accuracy')
     plt.legend()
     plt.show()
-    
 
 def plot_train_and_val_loss(train_loss, valid_loss):
     plt.figure(figsize=(10,8))
