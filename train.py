@@ -29,17 +29,20 @@ TEE_BASE_PATH=config('TEE_BASE_PATH')
 
 def do_evaluation(data, model, dice_fn):
     running_dice = 0
+    running_dice_per_class = 0
     model.train(False)
     for x, y in data:
         x = x.cuda()
         y = y.cuda()
         outputs = model(x)
-        Dice = dice_fn(outputs, y)
+        Dice, dice_per_class = dice_fn(outputs, y)
         running_dice  += Dice*data.batch_size
+        running_dice_per_class  += dice_per_class*data.batch_size
     avg_dice = running_dice / len(data.dataset)
+    avg_dice_per_class = running_dice_per_class / len(data.dataset)
     print("Run results")
     print('-' * 10)
-    print('Test Dice: {}'.format(avg_dice))
+    print('Test Dice: {}, Test Dice per class: {}'.format(avg_dice, avg_dice_per_class))
     print('-' * 10)
     return avg_dice
 
@@ -49,7 +52,7 @@ def start_train(model, train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, 
     
     ### Setup for checkpointing
     logger = logging.getLogger('U.trainer')
-    arguments = {"epoch": 0, "step": 0, "train_loss": [], "valid_loss": [], 'valid_dice': [], 'pixel_acc': []}
+    arguments = {"epoch": 0, "step": 0, "train_loss": [], "valid_loss": [], 'valid_dice': [],'valid_dice_per_class':[], 'pixel_acc': []}
     save_to_disk = True
     checkpointer = CheckPointer(
         model, optimizer, save_to_disk, logger

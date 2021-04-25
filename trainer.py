@@ -22,6 +22,7 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epoc
     train_loss = arguments["train_loss"]
     valid_loss = arguments["valid_loss"]
     valid_dice = arguments["valid_dice"]
+    valid_dice_per_class = arguments["valid_dice_per_class"]
     pixel_acc = arguments["pixel_acc"]
     
     best_acc = 0.0
@@ -41,6 +42,7 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epoc
 
             running_loss = 0.0
             running_dice = 0.0
+            running_dice_per_class = 0.0
             running_acc = 0.0
             
             step = 0
@@ -74,10 +76,11 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epoc
                         loss = loss_fn(outputs, y.long())
 
                 # stats - whatever is the phase
-                dice = dice_fn(outputs, y)
+                mean_dice, dice_per_class = dice_fn(outputs, y)
                 acc = acc_fn(outputs, y)
                 
-                running_dice  += dice*dataloader.batch_size
+                running_dice  += mean_dice*dataloader.batch_size
+                running_dice_per_class += dice_per_class*dataloader.batch_size
                 running_loss += loss*dataloader.batch_size 
                 running_acc  += acc*dataloader.batch_size
                 
@@ -88,6 +91,7 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epoc
 
             epoch_loss = running_loss / len(dataloader.dataset)
             epoch_dice = running_dice / len(dataloader.dataset)
+            epoch_dice_per_class = running_dice_per_class / len(dataloader.dataset)
             epoch_acc = running_acc / len(dataloader.dataset)
 
             print('Epoch {}/{}'.format(epoch, epochs - 1))
@@ -102,10 +106,10 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epoc
                 arguments["train_loss"] = train_loss
                 arguments["valid_loss"] = valid_loss
                 arguments["valid_dice"] = valid_dice
+                arguments["valid_dice_per_class"] = valid_dice_per_class
                 arguments["pixel_acc"] = pixel_acc
 
-            
-            # Added early stopping (Gulle)
+
             if not phase=='train':
                 if epoch_loss < lowest_val_loss:
                         lowest_val_loss = epoch_loss
