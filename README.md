@@ -82,21 +82,21 @@ for local Erling uses:
 
 ### Packages
 
-To install the python-decouple package, SimpleITK, albumentations for augmentation, PIL, torch, please use the following respective commands
-
-```
-conda install -c conda-forge python-decouple
-pip install SimpleITK
-pip install -U albumentations
-python3 -m pip install --upgrade Pillow
-conda install PyTorch -c PyTorch
-```
- Then, you can train the model on cityscapes by running the file “train.py”.
+This program was run in an anaconda environment with python 3.6.12.
+conda install --name myenv --file requirements.txt in order to install all required packages.
+ 
  
 ### Setup
-Input in TTE loader is a directory where all the patient sub directories are. Take the standard setup from the challenge and make a seperate test folder that contains the 50 medical images from patient 401-450. 
+in order for the program to find the datafiles create a .env file with the paths to the data:
+e.g : 
+    TTE_BASE_PATH = "Data/training"
+    TTE_FULL_BASE_PATH = "Data/training"
+    TTE_FULL_TEST_BASE_PATH = "Data/testing"
+    TEE_BASE_PATH = "Data/DataTEEGroundTruth"
+The folder the path is pointing to should contain 1 folder for each patient containing all of the images.
+The testing folder contains medical images from patient 401-450. 
+The TEE folder shold cotain two folders named train_gray and train_gt which contains the images and ground_truth respectivly.
 
-We are using a .env file to keep track of file paths. See at the top of train.py the respectful paths and please implement these.
 
 
 ## Our system
@@ -115,8 +115,23 @@ A collection of everything corresponding to training such as logging, outputs an
 
 ### trainer
 The logic behind training the model such as running through epochs. This module does all the traning.
+### Configs
+Config file conatining the deafult configuration of our system (hyperparameters and so on)
 
-### logs
+### utils/checkpoint
+File containing all the checkpointing functions, this file is copied from assigment 4 in https://github.com/hukkelas/TDT4265-StarterCode
+
+### utils/dice
+File containing functions for dice calculations
+
+### utils/logger
+File containing all the logging functions, this file is copied from assigment 4 in https://github.com/hukkelas/TDT4265-StarterCode
+
+### utils/model_zoo
+Suport functions for the checkpointer, this file is copied from assigment 4 in https://github.com/hukkelas/TDT4265-StarterCode
+
+### utils/plotter
+Different custom plotting functions
 
  ## Model Architecture
  All our contraction and expansion blocks uses 3x3 kernel size and padding=1, except in our first contraction block, where we use kernel size 7x7 and padding=1.
@@ -125,3 +140,4 @@ The logic behind training the model such as running through epochs. This module 
 ![0002](https://user-images.githubusercontent.com/60004726/116009316-27f9af00-a619-11eb-9f15-f7cd20a667c1.jpg)
 
  
+
