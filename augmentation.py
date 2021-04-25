@@ -55,7 +55,7 @@ class Augmenter():
         aug_mask = augmentations["mask"]
         return aug_image, aug_mask
 
-    def transform_image(self, image, mask, aug_choice):
+    def transform_image(self, image, mask, aug_choice="Transform"):
         assert aug_choice in self.transformations.keys()\
         , print("ASSERTION ERROR: Input aug_choice is not an option for transform image.\n",
                 "Valid options are: ", self.transformations.keys())
