@@ -1,3 +1,4 @@
+import argparse
 import logging
 import pandas as pd
 import matplotlib as mp
@@ -86,21 +87,45 @@ def get_dataset_path():
         , print("ASSERTION ERROR: config dataset value is not a dataset")
     return paths[cfg.DATASET.upper()]
 
-def create_dataset(use_transforms=False):
+def create_dataset(use_transforms=cfg.TRAINING.USE_TRANSFORMS):
     loaders = {
         "TTE": TTELoader,
         "RESIZED": ResizedLoader,
     }
     assert cfg.DATASET in loaders.keys()\
         , print("ASSERTION ERROR: config dataset value is not a dataset")
-    return loaders[cfg.DATASET](get_dataset_path(), use_transforms)
+    return loaders[cfg.DATASET](get_dataset_path(), use_transforms=use_transforms)
 
 def load_test_data():
-    tte_test_data = TTELoader(TTE_FULL_TEST_BASE_PATH)
-    tee_test_data = TEELoader(TEE_BASE_PATH)
+    # Loads test data. We do not wish to transform these
+    tte_test_data = TTELoader(TTE_FULL_TEST_BASE_PATH, use_transforms=False)
+    tee_test_data = TEELoader(TEE_BASE_PATH, use_transforms=False)
     return tte_test_data, tee_test_data
 
+def get_parser():
+    parser = argparse.ArgumentParser(description='Single Shot MultiBox Detector Training With PyTorch')
+    parser.add_argument(
+        "config_file",
+        default="",
+        metavar="FILE",
+        help="path to config file",
+        type=str,
+    )
+    parser.add_argument(
+        "opts",
+        help="Modify config options using the command-line",
+        default=None,
+        nargs=argparse.REMAINDER,
+    )
+    return parser
+
 def main ():
+    # Read config settings from yaml file
+    args = get_parser().parse_args()
+    cfg.merge_from_file(args.config_file)
+    cfg.merge_from_list(args.opts)
+    cfg.freeze()
+
     #create logger
     output_dir = pathlib.Path(cfg.OUTPUT_DIR)
     output_dir.mkdir(exist_ok=True, parents=True)
@@ -130,10 +155,6 @@ def main ():
     tte_test_data = DataLoader(tte_test_dataset, batch_size=test_bs, shuffle=True)
     tee_test_data = DataLoader(tee_test_dataset, batch_size=test_bs, shuffle=True)
 
-    # TODO: set up test set
-
-    # TODO: rotation of tee is implemented in getitem, not in open_as_array
-    # TODO: check if you can visualize a rotated TEE mask
     if cfg.TRAINING.VISUAL_DEBUG:
         plotter.plot_image_and_mask(data, 1)
     xb, yb = next(iter(train_data))

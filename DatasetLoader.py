@@ -40,7 +40,6 @@ class DatasetLoader(Dataset):
         return
                                        
     def __len__(self):
-        #length of all files to be loaded
         return len(self.files)
      
     def open_as_array(self, idx, invert=False):
@@ -62,6 +61,7 @@ class DatasetLoader(Dataset):
         y = torch.tensor(np.squeeze(mask_as_array), dtype=torch.torch.int64)
 
         return x, y
+
     
     def get_as_pil(self, idx): #fjernes?
         #get an image for visualization
@@ -73,7 +73,6 @@ class DatasetLoader(Dataset):
 class ResizedLoader(DatasetLoader):
     def __init__(self, data_dir, use_transforms=False, pytorch=True):
         """
-            Is called when model is initialized.
             Args:
                 data_dir: Directory including both gray image directory and ground truth directory.
         """
@@ -203,7 +202,7 @@ class TEELoader(DatasetLoader):
         gray_path = os.path.join(root, gt_file_name)
         gt_path = gray_path.replace("gray_", "gt_gt_")
         gt_path = gt_path.replace(".jpg", ".tif")
-        gt_path = gt_path.replace("train_gray", "/train_gt/")
+        gt_path = gt_path.replace("train_gray", "train_gt")
         files = {'gt': gt_path, 
                 'gray': gray_path}
         return files
@@ -221,25 +220,25 @@ class TEELoader(DatasetLoader):
 
     def open_mask(self, idx, add_dims=False):
         #open mask file
-        # raw_mask = np.array((cv2.imread(self.files[idx]['gt'], cv2.IMREAD_GRAYSCALE)))
-        raw_mask = np.array(Image.open(self.files[idx]['gt']))
+        raw_mask = np.array((cv2.imread(self.files[idx]['gt'], cv2.IMREAD_GRAYSCALE)))
         raw_mask = cv2.resize(raw_mask, dsize=(self.img_size, self.img_size))
-        #print(np.unique(raw_mask, return_counts = True))
-        # TODO: check if this works, im not sure if it does
+
+        # print(np.unique(raw_mask, return_counts = True))
         raw_mask = np.where(raw_mask>100, raw_mask, 0)
         raw_mask = np.where(raw_mask>200, 2, raw_mask)
         raw_mask = np.where(raw_mask>100, 1, raw_mask)
-        raw_mask = raw_mask.transpose((2,0,1))
-
-
         
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 
-
     def __getitem__(self, idx):
-        #get the image and mask as arrays
-        img_as_array = self.open_as_array(idx, invert=self.pytorch)
-        mask_as_array = self.open_mask(idx, add_dims=False)
+        # Get the image and mask as arrays
+        if cfg.TESTING.CROP_TEE:
+            img_as_array, mask_as_array = self.remove_image_borders(idx)
+        else:
+            img_as_array = self.open_as_array(idx, invert=self.pytorch)
+            mask_as_array = self.open_mask(idx, add_dims=False)
+
+        # Rotate TEE image 90 degrees
         img_as_array, mask_as_array = self.augmenter.rotate_image90(image=img_as_array, mask=mask_as_array)
 
         if self.use_transforms:
@@ -250,3 +249,30 @@ class TEELoader(DatasetLoader):
         y = torch.tensor(np.squeeze(mask_as_array), dtype=torch.torch.int64)
 
         return x, y
+    
+    def remove_image_borders(self, idx):
+        img_as_array = self.open_as_array(idx)
+        mask_as_array = self.open_mask(idx, add_dims=False)
+
+        x_max, y_max, y_min = self.find_max_min_values(img_as_array)
+        min_maxes = (0, y_min, x_max, y_max)
+        img, mask = self.augmenter.crop_and_resize(img_as_array, mask_as_array, min_maxes)
+        return img, mask
+
+    def find_max_min_values(self, img_as_array):
+        img_as_array= np.squeeze(img_as_array)
+        x_max = y_max = 0
+        y_min = 1000
+        y_max_set = False
+        for y in range(cfg.INPUT.IMAGE_SIZE[0]):
+            for x in range(cfg.INPUT.IMAGE_SIZE[1]):
+                if img_as_array[y][x] != 0:
+                    if x_max < x:
+                        x_max = x
+                    if not y_max_set:
+                        y_max = y
+                    if y_min > y:
+                        y_min = y
+        return x_max, y_max, y_min
+        
+                    
