@@ -40,7 +40,6 @@ class DatasetLoader(Dataset):
         return
                                        
     def __len__(self):
-        #length of all files to be loaded
         return len(self.files)
      
     def open_as_array(self, idx, invert=False):
@@ -111,9 +110,7 @@ class ResizedLoader(DatasetLoader):
     def open_mask(self, idx, add_dims=False):
         #open mask file
         raw_mask = np.array(Image.open(self.files[idx]['gt']))
-        print(raw_mask.shape)
         raw_mask = np.where(raw_mask>100, 1, 0)
-        print(raw_mask.shape)
         
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 
@@ -211,11 +208,8 @@ class TEELoader(DatasetLoader):
 
     def open_as_array(self, idx, invert=False):
         raw_us = np.array(Image.open(self.files[idx]['gray']))
-        print("image:",raw_us.shape)
         raw_us = cv2.resize(raw_us, dsize=(self.img_size, self.img_size))
         raw_us = np.stack([raw_us], axis=2)
-        print("image:",raw_us.shape)
-        
         
         if invert:
             raw_us = raw_us.transpose((2,0,1))
@@ -239,8 +233,12 @@ class TEELoader(DatasetLoader):
 
     def __getitem__(self, idx):
         #get the image and mask as arrays
-        img_as_array = self.open_as_array(idx, invert=self.pytorch)
-        mask_as_array = self.open_mask(idx, add_dims=False)
+        if cfg.TESTING.CROP_TEE:
+            img_as_array, mask_as_array = self.remove_image_borders(idx)
+        else:
+            img_as_array = self.open_as_array(idx, invert=self.pytorch)
+            mask_as_array = self.open_mask(idx, add_dims=False)
+
         img_as_array, mask_as_array = self.augmenter.rotate_image90(image=img_as_array, mask=mask_as_array)
 
         if self.use_transforms:
@@ -258,7 +256,7 @@ class TEELoader(DatasetLoader):
 
         x_max, y_max, y_min = self.find_max_min_values(img_as_array)
         min_maxes = (0, y_min, x_max, y_max)
-        print(min_maxes)
+        # print(min_maxes)
         img, mask = self.augmenter.crop_and_resize(img_as_array, mask_as_array, min_maxes)
         return img, mask
 

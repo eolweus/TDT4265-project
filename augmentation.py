@@ -23,6 +23,7 @@ class Augmenter():
         self.rotate_TEE = A.Compose(
             [
                 A.Rotate(limit=[90,90], border_mode=cv2.BORDER_CONSTANT, p=1.0)
+            ]
         )
         
         self.transformations = {
