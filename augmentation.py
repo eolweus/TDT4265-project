@@ -19,11 +19,10 @@ class Augmenter():
             ] 
         )
 
+        # TODO: check if this is the right rotation
         self.rotate_TEE = A.Compose(
             [
                 A.Rotate(limit=[90,90], border_mode=cv2.BORDER_CONSTANT, p=1.0)
-                # A.RandomRotate90(factor=1)
-            ]
         )
         
         self.transformations = {
@@ -34,7 +33,6 @@ class Augmenter():
             "RGB_shift": A.RGBShift(r_shift_limit=25, b_shift_limit=25, g_shift_limit=25, p=0.7)
         }
 
-    # TODO: check that augmentations work
     def augment_image(self, image, mask):
         augmentations = self.transform(image=image, mask=mask)
         aug_image = augmentations["image"]
@@ -69,7 +67,7 @@ class Augmenter():
         transform = A.Compose(
             [
                 A.Crop(*min_maxes),
-                # A.RandomResizedCrop(*cfg.INPUT.IMAGE_SIZE, scale=(1.0, 1.0), p=1.0),
+                A.RandomResizedCrop(*cfg.INPUT.IMAGE_SIZE, scale=(1.0, 1.0), p=1.0),
             ]
         )
         augmentations = transform(image=image, mask=mask)

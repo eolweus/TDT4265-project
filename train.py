@@ -126,8 +126,6 @@ def main ():
     test_data = DataLoader(tte_test_dataset, batch_size=test_bs, shuffle=True)
     tee_test_data = DataLoader(tee_test_dataset, batch_size=test_bs, shuffle=True)
 
-    # TODO: rotation of tee is implemented in getitem, not in open_as_array
-    # TODO: check if you can visualize a rotated TEE mask
     if cfg.TRAINING.VISUAL_DEBUG:
         plotter.plot_image_and_mask(data, 1)
     xb, yb = next(iter(train_data))

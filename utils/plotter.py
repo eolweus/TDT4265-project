@@ -33,13 +33,6 @@ def plot_image_and_mask(data, idx):
     ax[1].imshow(data.open_mask(idx))
     plt.show()
 
-# Test function
-def plot_image_and_mask_test(data, idx):
-    fig, ax = plt.subplots(1,2)
-    ax[0].imshow(data.open_as_array(idx))
-    ax[1].imshow(data.open_mask_2(idx))
-    plt.show()
-
 def plot_with_augmentations(data, idx):
     aug = Augmenter()
 
