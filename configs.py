@@ -20,8 +20,8 @@ cfg.MODEL.BACKBONE.OUTPUT_CHANNELS = 128
 # ---------------------------------------------------------------------------- #
 cfg.SOLVER = CN()
 # train configs
-cfg.SOLVER.BATCH_SIZE = 12
-cfg.SOLVER.TEST_BATCH_SIZE = 6
+cfg.SOLVER.BATCH_SIZE = 10
+cfg.SOLVER.TEST_BATCH_SIZE = 5 
 cfg.SOLVER.LEARN_RATE = 0.01
 
 # -----------------------------------------------------------------------------

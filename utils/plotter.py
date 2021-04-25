@@ -1,8 +1,24 @@
 import matplotlib.pyplot as plt
+import numpy as np
 import torch
 
 from augmentation import Augmenter
 
+
+def plot_dice_history(dice_per_class):
+    plt.figure(figsize=(10,8))
+    print(dice_per_class[-12:])
+    plt.plot(dice_per_class[1::4], label='LV endo dice history')
+    plt.plot(dice_per_class[2::4], label='LV evi dice history')
+    plt.plot(dice_per_class[3::4], label='LA dice history')
+    plt.legend()
+    plt.show()
+    
+def plot_acc_history(pixel_acc):
+    plt.figure(figsize=(10,8))
+    plt.plot(pixel_acc, label='Validation Accuracy')
+    plt.legend()
+    plt.show()
 
 def plot_train_and_val_loss(train_loss, valid_loss):
     plt.figure(figsize=(10,8))
@@ -19,7 +35,7 @@ def plot_predicted_segmentations(bs, predicted_batch, image_batch, mask_batch):
         ax[i,2].imshow(predb_to_mask(predicted_batch, i))
     plt.show()
 
-def predict_on_batch_and_plot(dataset, unet):
+def predict_on_batch_and_plot(dataset, unet, bs):
     #predict on the next train batch
     image_batch, mask_batch = next(iter(dataset))
     with torch.no_grad():
