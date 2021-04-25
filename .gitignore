@@ -146,4 +146,4 @@ logs/
 **log.txt
 
 # Run file
-run.ipynb
+**.ipynb
