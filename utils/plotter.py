@@ -43,14 +43,6 @@ def predict_on_batch_and_plot(dataset, unet, bs):
     
     plot_predicted_segmentations(bs, predicted_batch, image_batch, mask_batch)
 
-def test_tee_and_plot(tee_test_dataset, unet):
-    image_batch, mask_batch = next(iter(tee_test_dataset))
-    unet.cuda()
-    with torch.no_grad():
-        predicted_batch = unet(image_batch.cuda())
-    
-    plot_predicted_segmentations(10, predicted_batch, image_batch, mask_batch)
-
 def plot_image_and_mask(data, idx):
     fig, ax = plt.subplots(1,2)
     ax[0].imshow(data.open_as_array(idx))

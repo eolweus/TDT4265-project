@@ -150,13 +150,10 @@ class TTELoader(DatasetLoader):
                 'gray': gt_path.replace("_gt", "")}
         return files
 
-    def open_as_array(self, idx, invert=False):
+    def open_as_array(self, idx):
         raw_us = np.array(self.load_itk(self.files[idx]['gray']))
         raw_us = cv2.resize(raw_us, dsize=self.img_size)
         raw_us = np.stack([raw_us], axis=2)
-        
-        if invert:
-            raw_us = raw_us.transpose((2,0,1))
     
         # normalize
         return (raw_us / np.iinfo(raw_us.dtype).max)
@@ -165,7 +162,6 @@ class TTELoader(DatasetLoader):
         #open mask file
         raw_mask = np.array((self.load_itk(self.files[idx]['gt'])))
         raw_mask = cv2.resize(raw_mask, dsize=self.img_size)
-        # raw_mask = np.where(raw_mask>100, 1, 0)
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 
     def load_itk(self, filename):
@@ -215,15 +211,15 @@ class TEELoader(DatasetLoader):
 
         # print(np.unique(raw_mask, return_counts = True))
         raw_mask = np.where(raw_mask>100, raw_mask, 0)
-        raw_mask = np.where(raw_mask>200, 1, raw_mask)
-        raw_mask = np.where(raw_mask>100, 2, raw_mask)
+        raw_mask = np.where(raw_mask>200, 2, raw_mask)
+        raw_mask = np.where(raw_mask>100, 1, raw_mask)
         
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 
     def __getitem__(self, idx):
         # Get the image and mask as arrays
         if cfg.TESTING.CROP_TEE:
-            img_as_array, mask_as_array = self.remove_image_borders(idx, invert=self.pytorch)
+            img_as_array, mask_as_array = self.remove_image_borders(idx)
         else:
             img_as_array = self.open_as_array(idx)
             mask_as_array = self.open_mask(idx, add_dims=False)
@@ -245,7 +241,7 @@ class TEELoader(DatasetLoader):
 
         return x, y
     
-    def remove_image_borders(self, idx, invert=False):
+    def remove_image_borders(self, idx):
         img_as_array = self.open_as_array(idx)
         mask_as_array = self.open_mask(idx, add_dims=False)
 
