@@ -136,6 +136,7 @@ class TTELoader(DatasetLoader):
             for name in files:
                 if name[-7:] == "_gt.mhd":
                     dict_list.append(self.combine_files(root, name))
+                    break
         return dict_list  
 
 
@@ -202,7 +203,7 @@ class TEELoader(DatasetLoader):
         gray_path = os.path.join(root, gt_file_name)
         gt_path = gray_path.replace("gray_", "gt_gt_")
         gt_path = gt_path.replace(".jpg", ".tif")
-        gt_path = gt_path.replace("/train_gray/", "/train_gt/")
+        gt_path = gt_path.replace("train_gray", "/train_gt/")
         files = {'gt': gt_path, 
                 'gray': gray_path}
         return files
@@ -228,6 +229,7 @@ class TEELoader(DatasetLoader):
         raw_mask = np.where(raw_mask>100, raw_mask, 0)
         raw_mask = np.where(raw_mask>200, 2, raw_mask)
         raw_mask = np.where(raw_mask>100, 1, raw_mask)
+        raw_mask = raw_mask.transpose((2,0,1))
 
 
         

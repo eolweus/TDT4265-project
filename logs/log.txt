@@ -177,3 +177,478 @@ TRAIN_PARTITION: 0.6666666666666666
 VISUAL_DEBUG: True
 2021-04-24 20:46:24,006 U.trainer INFO: Start training ...
 2021-04-24 20:46:42,495 U.trainer INFO: Saving checkpoint to outputs/checkpoints/model_000000.pth
+2021-04-25 11:55:10,468 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 5
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: False
+  VISUAL_DEBUG: True
+2021-04-25 11:55:11,913 U.trainer INFO: Start training ...
+2021-04-25 11:56:14,623 U.trainer INFO: Saving checkpoint to ./outputs\model_000000.pth
+2021-04-25 11:58:12,863 U.trainer INFO: Saving checkpoint to ./outputs\model_000002.pth
+2021-04-25 11:59:37,117 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 3
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 11:59:38,609 U.trainer INFO: Loading checkpoint from ./outputs\model_000002.pth
+2021-04-25 11:59:38,640 U.trainer INFO: Loading optimizer from ./outputs\model_000002.pth
+2021-04-25 11:59:38,659 U.trainer INFO: Start training ...
+2021-04-25 11:59:54,691 U.trainer INFO: Saving checkpoint to ./outputs\model_000002.pth
+2021-04-25 12:00:23,727 U.trainer INFO: Saving checkpoint to ./outputs\model_000004.pth
+2021-04-25 12:00:53,722 U.trainer INFO: Saving checkpoint to ./outputs\model_000006.pth
+2021-04-25 12:01:23,327 U.trainer INFO: Saving checkpoint to ./outputs\model_000008.pth
+2021-04-25 12:01:52,965 U.trainer INFO: Saving checkpoint to ./outputs\model_000010.pth
+2021-04-25 12:01:59,708 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 3
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:02:01,221 U.trainer INFO: Loading checkpoint from ./outputs\model_000010.pth
+2021-04-25 12:02:01,251 U.trainer INFO: Loading optimizer from ./outputs\model_000010.pth
+2021-04-25 12:02:01,270 U.trainer INFO: Start training ...
+2021-04-25 12:02:17,508 U.trainer INFO: Saving checkpoint to ./outputs\model_000010.pth
+2021-04-25 12:02:46,919 U.trainer INFO: Saving checkpoint to ./outputs\model_000012.pth
+2021-04-25 12:03:16,753 U.trainer INFO: Saving checkpoint to ./outputs\model_000014.pth
+2021-04-25 12:03:46,877 U.trainer INFO: Saving checkpoint to ./outputs\model_000016.pth
+2021-04-25 12:06:22,778 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 3
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:06:24,195 U.trainer INFO: Loading checkpoint from ./outputs\model_000016.pth
+2021-04-25 12:06:24,225 U.trainer INFO: Loading optimizer from ./outputs\model_000016.pth
+2021-04-25 12:06:24,244 U.trainer INFO: Start training ...
+2021-04-25 12:06:39,929 U.trainer INFO: Saving checkpoint to ./outputs\model_000016.pth
+2021-04-25 12:07:08,996 U.trainer INFO: Saving checkpoint to ./outputs\model_000018.pth
+2021-04-25 12:07:38,505 U.trainer INFO: Saving checkpoint to ./outputs\model_000020.pth
+2021-04-25 12:08:08,221 U.trainer INFO: Saving checkpoint to ./outputs\model_000022.pth
+2021-04-25 12:08:37,393 U.trainer INFO: Saving checkpoint to ./outputs\model_000024.pth
+2021-04-25 12:09:06,692 U.trainer INFO: Saving checkpoint to ./outputs\model_000026.pth
+2021-04-25 12:09:35,847 U.trainer INFO: Saving checkpoint to ./outputs\model_000028.pth
+2021-04-25 12:09:50,616 U INFO: Start evaluating on TTE data...
+2021-04-25 12:09:52,945 U INFO: Evaluation result: 0.939665675163269
+2021-04-25 12:09:52,946 U INFO: Start evaluating on TEE data...
+2021-04-25 12:11:48,193 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 0
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:11:49,607 U.trainer INFO: Loading checkpoint from ./outputs\model_000028.pth
+2021-04-25 12:11:49,638 U.trainer INFO: Loading optimizer from ./outputs\model_000028.pth
+2021-04-25 12:11:49,658 U.trainer INFO: Start training ...
+2021-04-25 12:12:05,832 U INFO: Start evaluating on TTE data...
+2021-04-25 12:12:06,983 U INFO: Evaluation result: 0.9198731184005737
+2021-04-25 12:12:06,983 U INFO: Start evaluating on TEE data...
+2021-04-25 12:12:07,720 U INFO: Evaluation result: 0.0
+2021-04-25 12:23:18,877 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 0
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:24:12,928 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 0
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:24:14,331 U.trainer INFO: No checkpoint found.
+2021-04-25 12:24:14,331 U.trainer INFO: Start training ...
+2021-04-25 12:25:22,148 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 0
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:25:23,575 U.trainer INFO: No checkpoint found.
+2021-04-25 12:25:23,576 U.trainer INFO: Start training ...
+2021-04-25 12:25:56,149 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 0
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:25:57,707 U.trainer INFO: No checkpoint found.
+2021-04-25 12:25:57,708 U.trainer INFO: Start training ...
+2021-04-25 12:28:19,042 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 0
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:28:20,506 U.trainer INFO: No checkpoint found.
+2021-04-25 12:28:20,507 U.trainer INFO: Start training ...
+2021-04-25 12:28:58,623 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 0
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:29:00,116 U.trainer INFO: No checkpoint found.
+2021-04-25 12:29:00,116 U.trainer INFO: Start training ...
+2021-04-25 12:30:25,940 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 0
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:30:27,395 U.trainer INFO: No checkpoint found.
+2021-04-25 12:30:27,395 U.trainer INFO: Start training ...
+2021-04-25 12:30:56,647 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 3
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:31:12,807 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 3
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:31:14,368 U.trainer INFO: No checkpoint found.
+2021-04-25 12:31:14,368 U.trainer INFO: Start training ...
+2021-04-25 12:31:30,480 U.trainer INFO: Saving checkpoint to ./outputs\model_000000.pth
+2021-04-25 12:31:59,539 U.trainer INFO: Saving checkpoint to ./outputs\model_000002.pth
+2021-04-25 12:32:28,431 U.trainer INFO: Saving checkpoint to ./outputs\model_000004.pth
+2021-04-25 12:32:57,653 U.trainer INFO: Saving checkpoint to ./outputs\model_000006.pth
+2021-04-25 12:33:27,768 U.trainer INFO: Saving checkpoint to ./outputs\model_000008.pth
+2021-04-25 12:33:56,883 U.trainer INFO: Saving checkpoint to ./outputs\model_000010.pth
+2021-04-25 12:34:26,626 U.trainer INFO: Saving checkpoint to ./outputs\model_000012.pth
+2021-04-25 12:34:56,102 U.trainer INFO: Saving checkpoint to ./outputs\model_000014.pth
+2021-04-25 12:35:25,197 U.trainer INFO: Saving checkpoint to ./outputs\model_000016.pth
+2021-04-25 12:35:53,719 U.trainer INFO: Saving checkpoint to ./outputs\model_000018.pth
+2021-04-25 12:36:23,501 U.trainer INFO: Saving checkpoint to ./outputs\model_000020.pth
+2021-04-25 12:36:53,316 U.trainer INFO: Saving checkpoint to ./outputs\model_000022.pth
+2021-04-25 12:37:22,141 U.trainer INFO: Saving checkpoint to ./outputs\model_000024.pth
+2021-04-25 12:37:51,467 U.trainer INFO: Saving checkpoint to ./outputs\model_000026.pth
+2021-04-25 12:38:20,913 U.trainer INFO: Saving checkpoint to ./outputs\model_000028.pth
+2021-04-25 12:38:50,827 U.trainer INFO: Saving checkpoint to ./outputs\model_000030.pth
+2021-04-25 12:39:20,215 U.trainer INFO: Saving checkpoint to ./outputs\model_000032.pth
+2021-04-25 12:39:49,305 U INFO: Start evaluating on TTE data...
+2021-04-25 12:41:02,584 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 0
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:41:03,995 U.trainer INFO: Loading checkpoint from ./outputs\model_000032.pth
+2021-04-25 12:41:04,028 U.trainer INFO: Loading optimizer from ./outputs\model_000032.pth
+2021-04-25 12:41:04,048 U.trainer INFO: Start training ...
+2021-04-25 12:41:19,899 U INFO: Start evaluating on TTE data...
+2021-04-25 12:41:21,074 U INFO: Evaluation result: 0.9308640956878662
+2021-04-25 12:41:21,074 U INFO: Start evaluating on TEE data...
+2021-04-25 12:42:08,953 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 0
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:42:10,371 U.trainer INFO: Loading checkpoint from ./outputs\model_000032.pth
+2021-04-25 12:42:10,400 U.trainer INFO: Loading optimizer from ./outputs\model_000032.pth
+2021-04-25 12:42:10,420 U.trainer INFO: Start training ...
+2021-04-25 12:42:26,253 U INFO: Start evaluating on TTE data...
+2021-04-25 12:42:27,497 U INFO: Evaluation result: 0.933215856552124
+2021-04-25 12:42:27,497 U INFO: Start evaluating on TEE data...
+2021-04-25 12:42:28,094 U INFO: Evaluation result: 0.0
+2021-04-25 12:44:29,168 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 0
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:44:30,568 U.trainer INFO: Loading checkpoint from ./outputs\model_000032.pth
+2021-04-25 12:44:30,597 U.trainer INFO: Loading optimizer from ./outputs\model_000032.pth
+2021-04-25 12:44:30,616 U.trainer INFO: Start training ...
+2021-04-25 12:44:46,433 U INFO: Start evaluating on TTE data...
+2021-04-25 12:44:47,577 U INFO: Evaluation result: 0.9217900633811951
+2021-04-25 12:44:47,577 U INFO: Start evaluating on TEE data...
+2021-04-25 12:44:48,146 U INFO: Evaluation result: 0.0
+2021-04-25 12:45:19,411 U INFO: Loaded configuration file DATASET: TTE
+INPUT:
+  IMAGE_SIZE: (384, 384)
+LOG_DIR: ./logs
+MODEL:
+  BACKBONE:
+    INPUT_CHANNELS: 1
+    OUTPUT_CHANNELS: 128
+  INPUT_CHANNELS: 1
+  NUM_CLASSES: 4
+OUTPUT_DIR: ./outputs
+SOLVER:
+  BATCH_SIZE: 12
+  LEARN_RATE: 0.01
+  TEST_BATCH_SIZE: 6
+TRAINING:
+  EARLY_STOP_COUNT: 0
+  EPOCHS: 50
+  TRAIN_PARTITION: 0.6666666666666666
+  USE_CHECKPOINT: True
+  VISUAL_DEBUG: True
+2021-04-25 12:45:20,808 U.trainer INFO: Loading checkpoint from ./outputs\model_000032.pth
+2021-04-25 12:45:20,838 U.trainer INFO: Loading optimizer from ./outputs\model_000032.pth
+2021-04-25 12:45:20,858 U.trainer INFO: Start training ...
+2021-04-25 12:45:36,660 U INFO: Start evaluating on TTE data...
+2021-04-25 12:45:37,835 U INFO: Evaluation result: 0.9199471473693848
+2021-04-25 12:45:37,835 U INFO: Start evaluating on TEE data...
+2021-04-25 12:45:38,427 U INFO: Evaluation result: 0.0

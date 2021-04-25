@@ -16,7 +16,7 @@ import numpy as np
 from DatasetLoader import DatasetLoader, TTELoader, ResizedLoader, TEELoader
 from utils.checkpoint import CheckPointer
 from utils.logger import setup_logger
-from utils.dice import dice_metric as dice_score
+from utils.dice import dice_multiclass, acc_metric
 import utils.plotter as plotter
 from trainer import do_train
 from Unet2D import Unet2D
@@ -44,12 +44,12 @@ def do_evaluation(data, model, dice_fn):
     return avg_dice
 
 
-def start_train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1):
+def start_train(model, train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epochs=1):
     model.cuda()
     
     ### Setup for checkpointing
     logger = logging.getLogger('U.trainer')
-    arguments = {"epoch": 0, "step": 0}
+    arguments = {"epoch": 0, "step": 0, "train_loss": [], "valid_loss": [], 'valid_dice': [], 'pixel_acc': []}
     save_to_disk = True
     checkpointer = CheckPointer(
         model, optimizer, save_to_disk, logger
@@ -59,19 +59,19 @@ def start_train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1)
         arguments.update(extra_checkpoint_data) 
     
     # The trainer has been moved to trainer.py
-    train_loss, valid_loss = do_train(model,train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs, checkpointer, arguments)
-    return train_loss, valid_loss
+    train_loss, valid_loss, valid_dice, pixel_acc = do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epochs, checkpointer, arguments)
+    return train_loss, valid_loss, valid_dice, pixel_acc
 
 def evauate_and_log_results(logger, unet, tte_test_data, tee_test_data):
     # image = reader.Execute();
     logger.info('Start evaluating on TTE data...')
     torch.cuda.empty_cache()  # speed up evaluating after training finished
-    result = do_evaluation(tte_test_data, unet, dice_score)
+    result = do_evaluation(tte_test_data, unet, dice_multiclass)
     logger.info("Evaluation result: {}".format(result))
     
     logger.info('Start evaluating on TEE data...')
     torch.cuda.empty_cache()  # speed up evaluating after training finished
-    result = do_evaluation(tee_test_data, unet, dice_score)
+    result = do_evaluation(tee_test_data, unet, dice_multiclass)
     logger.info("Evaluation result: {}".format(result))
 
 def get_dataset_path(): 
@@ -124,7 +124,7 @@ def main ():
     train_dataset, valid_dataset = torch.utils.data.random_split(data, (train_partition, val_partition))
     train_data = DataLoader(train_dataset, batch_size=bs, shuffle=True)
     valid_data = DataLoader(valid_dataset, batch_size=bs, shuffle=True)
-    test_data = DataLoader(tte_test_dataset, batch_size=test_bs, shuffle=True)
+    tte_test_data = DataLoader(tte_test_dataset, batch_size=test_bs, shuffle=True)
     tee_test_data = DataLoader(tee_test_dataset, batch_size=test_bs, shuffle=True)
 
     # TODO: set up test set
@@ -146,7 +146,7 @@ def main ():
     opt = torch.optim.Adam(unet.parameters(), lr=lr)
 
     #do some training 
-    train_loss, valid_loss = start_train(unet, train_data, valid_data, loss_fn, opt, dice_score, epochs=epochs)
+    train_loss, valid_loss, valid_dice, pixel_acc = start_train(unet, train_data, valid_data, loss_fn, opt, dice_multiclass, acc_metric, epochs=epochs)
     
     # Evaluate networke(f)
     evauate_and_log_results(logger, unet, tte_test_data, tee_test_data)
@@ -157,11 +157,11 @@ def main ():
 
     # show the predicted segmentations
     if cfg.TRAINING.VISUAL_DEBUG:
-        plotter.predict_on_batch_and_plot(train_data, unet)
+        plotter.predict_on_batch_and_plot(tte_test_data, unet, test_bs)
 
     # TODO: add test parameter to config
-    # if cfg.TRAINING.VISUAL_DEBUG and cfg.TEST:
-    #     plotter.predict_on_batch_and_plot(tee_test_data)
+    if cfg.TRAINING.VISUAL_DEBUG:
+        plotter.predict_on_batch_and_plot(tee_test_data, unet, test_bs)
 
 
 if __name__ == "__main__": 

@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 import torch
 
 from augmentation import Augmenter
@@ -19,7 +20,7 @@ def plot_predicted_segmentations(bs, predicted_batch, image_batch, mask_batch):
         ax[i,2].imshow(predb_to_mask(predicted_batch, i))
     plt.show()
 
-def predict_on_batch_and_plot(dataset, unet):
+def predict_on_batch_and_plot(dataset, unet, bs):
     #predict on the next train batch
     image_batch, mask_batch = next(iter(dataset))
     with torch.no_grad():
