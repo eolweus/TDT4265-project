@@ -14,9 +14,9 @@ def plot_dice_history(dice_per_class):
     plt.legend()
     plt.show()
     
-def plot_acc_history(pixel_acc):
+def plot_avg_dice_history(valid_dice):
     plt.figure(figsize=(10,8))
-    plt.plot(pixel_acc, label='Validation Accuracy')
+    plt.plot(valid_dice, label='Average validation Dice History')
     plt.legend()
     plt.show()
 

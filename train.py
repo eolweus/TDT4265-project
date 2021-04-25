@@ -177,25 +177,19 @@ def main ():
     # Evaluate network(f)
     evauate_and_log_results(logger, unet, tte_test_data, tee_test_data)
 
-    # plot training and validation losses
     if cfg.TRAINING.VISUAL_DEBUG:
+        # plot training and validation losses
         plotter.plot_train_and_val_loss(train_loss, valid_loss)
         
-    # plot validation pixel accuracy
-    if cfg.TRAINING.VISUAL_DEBUG:
-        plotter.plot_acc_history(pixel_acc)
-        
-    # plot validation dice
-    if cfg.TRAINING.VISUAL_DEBUG:
+        # plot validation pixel accuracy
+        plotter.plot_avg_dice_history(valid_dice)
+
+        # plot validation dice
         plotter.plot_dice_history(valid_dice_per_class)
 
-    # show the predicted segmentations
-    if cfg.TRAINING.VISUAL_DEBUG:
+        # show the predicted segmentations
         plotter.predict_on_batch_and_plot(tte_test_data, unet, test_bs)
-
-    if cfg.TRAINING.VISUAL_DEBUG:
         plotter.predict_on_batch_and_plot(tee_test_data, unet, test_bs)
-
 
 if __name__ == "__main__": 
     main()
