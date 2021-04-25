@@ -16,6 +16,8 @@ scenarios. The main task in the project will be segmentation of structures of in
 images of the heart (see figure). Two modalities will be considered, transthoracic ultrasound
 (with ground truth segmentations available) and trans esophageal ultrasound (expert validated
 test set is available). 
+![image](https://user-images.githubusercontent.com/60004726/116009779-bec76b00-a61b-11eb-92f0-032536ee2374.png)
+
 
 We were free to implement our solution however we wanted, but there were some system requirements which had to be fulfilled:
 
