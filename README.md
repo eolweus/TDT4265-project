@@ -7,7 +7,7 @@ This Project has been developed by:
 ```
 Gulleik L Olsen         gulleik@hotmail.com           Software Engineer
 Erling Olweus           erling.olweus@gmail.com       Software Engineer
-Øyvind R Lunde          fredrik.granjansen@gmail.com  Software Engineer
+Fredrik Gran-Jansen     fredrik.granjansen@gmail.com  Software Engineer
 ```
 
 ## Project description
