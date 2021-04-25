@@ -1,12 +1,13 @@
 TRAINING:
     EARLY_STOP_COUNT: 7
-    USE_TRANSFORMS: TRUE
+    USE_TRANSFORMS: True
     TRANSFORM: "Transform"
+    USE_CHECKPOINT: True
 SOLVER:
     TEST_BATCH_SIZE: 10
     BATCH_SIZE: 20
     LEARN_RATE: 2e-3
 TESTING:
     CROP_TEE: True
-OUTPUT_DIR: "./outputs/TTE"
+OUTPUT_DIR: "./outputs/transform"
 LOG_DIR: "./logs/transform"
