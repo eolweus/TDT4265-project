@@ -12,6 +12,8 @@ cfg.MODEL.NUM_CLASSES = 4
 # ---------------------------------------------------------------------------- #
 cfg.MODEL.BACKBONE = CN()
 
+cfg.MODEL.USE_BACKBONE = False
+
 cfg.MODEL.BACKBONE.INPUT_CHANNELS = 1
 cfg.MODEL.BACKBONE.OUTPUT_CHANNELS = 128
 

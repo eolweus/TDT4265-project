@@ -229,7 +229,7 @@ class TEELoader(DatasetLoader):
             mask_as_array = self.open_mask(idx, add_dims=False)
 
         # Rotate TEE image 180 degrees
-        img_as_array, mask_as_array = self.augmenter.rotate_image(image=img_as_array, mask=mask_as_array, degrees=90)
+        img_as_array, mask_as_array = self.augmenter.rotate_image(image=img_as_array, mask=mask_as_array, degrees=180)
         
         if self.pytorch:
             img_as_array = img_as_array.transpose((2,0,1))
