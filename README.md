@@ -59,25 +59,6 @@ git clone https://github.com/gg1977/Unet2D
 
 You can also download this repository as a zip file and unzip it on your computer.
 
-## Setup
-
-To further develop this project make sure to install python-decouple and add a .env file containing the path to your training images.
-Your training images should be seperated into the following structure
-
-| CAMUS_resized
-|---train_gray
-|---train_gt
-
-.env file should be in the root folder of the project and should look like this:
-
-IMAGE_BASE_PATH=your_image_base_path
-
-for cybelle this is:
-../../../../work/datasets/medical_project/CAMUS_resized
-
-for local Erling uses:
-./home/gkiss/Data/CAMUS_resized
-
 ## Prerequisites
 
 ### Packages
@@ -97,7 +78,7 @@ The folder the path is pointing to should contain 1 folder for each patient cont
 The testing folder contains medical images from patient 401-450. 
 The TEE folder shold cotain two folders named train_gray and train_gt which contains the images and ground_truth respectivly.
 
-
+In order to run the network with the default parameters run train.py configs/defaults.yaml
 
 ## Our system
 
