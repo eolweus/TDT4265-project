@@ -62,6 +62,7 @@ class DatasetLoader(Dataset):
         y = torch.tensor(np.squeeze(mask_as_array), dtype=torch.torch.int64)
 
         return x, y
+
     
     def get_as_pil(self, idx): #fjernes?
         #get an image for visualization
@@ -73,7 +74,6 @@ class DatasetLoader(Dataset):
 class ResizedLoader(DatasetLoader):
     def __init__(self, data_dir, use_transforms=False, pytorch=True):
         """
-            Is called when model is initialized.
             Args:
                 data_dir: Directory including both gray image directory and ground truth directory.
         """
@@ -111,7 +111,9 @@ class ResizedLoader(DatasetLoader):
     def open_mask(self, idx, add_dims=False):
         #open mask file
         raw_mask = np.array(Image.open(self.files[idx]['gt']))
+        print(raw_mask.shape)
         raw_mask = np.where(raw_mask>100, 1, 0)
+        print(raw_mask.shape)
         
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 
@@ -202,15 +204,18 @@ class TEELoader(DatasetLoader):
         gray_path = os.path.join(root, gt_file_name)
         gt_path = gray_path.replace("gray_", "gt_gt_")
         gt_path = gt_path.replace(".jpg", ".tif")
-        gt_path = gt_path.replace("/train_gray/", "/train_gt/")
+        gt_path = gt_path.replace("train_gray", "train_gt")
         files = {'gt': gt_path, 
                 'gray': gray_path}
         return files
 
     def open_as_array(self, idx, invert=False):
         raw_us = np.array(Image.open(self.files[idx]['gray']))
+        print("image:",raw_us.shape)
         raw_us = cv2.resize(raw_us, dsize=(self.img_size, self.img_size))
         raw_us = np.stack([raw_us], axis=2)
+        print("image:",raw_us.shape)
+        
         
         if invert:
             raw_us = raw_us.transpose((2,0,1))
@@ -223,13 +228,32 @@ class TEELoader(DatasetLoader):
         # raw_mask = np.array((cv2.imread(self.files[idx]['gt'], cv2.IMREAD_GRAYSCALE)))
         raw_mask = np.array(Image.open(self.files[idx]['gt']))
         raw_mask = cv2.resize(raw_mask, dsize=(self.img_size, self.img_size))
-        #print(np.unique(raw_mask, return_counts = True))
+
+        # print(np.unique(raw_mask, return_counts = True))
         # TODO: check if this works, im not sure if it does
         raw_mask = np.where(raw_mask>100, raw_mask, 0)
         raw_mask = np.where(raw_mask>200, 2, raw_mask)
         raw_mask = np.where(raw_mask>100, 1, raw_mask)
+        
+        return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 
+    # Test function
+    def open_mask_2(self, idx, add_dims=False):
+        #open mask file
+        # raw_mask = np.array((cv2.imread(self.files[idx]['gt'], cv2.IMREAD_GRAYSCALE)))
+        raw_mask = np.array(Image.open(self.files[idx]['gt']))
+        # print(raw_mask.shape)
+        # raw_mask = np.delete(raw_mask, 1)
+        raw_mask = cv2.resize(raw_mask, dsize=(self.img_size, self.img_size))
+        # print(raw_mask.shape)
+        # raw_mask = np.stack([raw_mask], axis=2)
+        # print(raw_mask.shape)
 
+        # print(np.unique(raw_mask, return_counts = True))
+        # TODO: check if this works, im not sure if it does
+        raw_mask = np.where(raw_mask>100, raw_mask, 0)
+        raw_mask = np.where(raw_mask>200, 2, raw_mask)
+        raw_mask = np.where(raw_mask>100, 1, raw_mask)
         
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 
@@ -248,3 +272,34 @@ class TEELoader(DatasetLoader):
         y = torch.tensor(np.squeeze(mask_as_array), dtype=torch.torch.int64)
 
         return x, y
+    
+    def remove_image_borders(self, idx):
+        img_as_array = self.open_as_array(idx)
+        # print(img_as_array.shape)
+        mask_as_array = self.open_mask(idx, add_dims=False)
+
+        x_max, y_max, y_min = self.find_max_min_values(img_as_array)
+        min_maxes = (0, y_min, x_max, y_max)
+        print(min_maxes)
+        img, mask = self.augmenter.crop_and_resize(img_as_array, mask_as_array, min_maxes)
+        return img, mask
+
+    # TODO: fix this so that y_max and y_min are correct
+    def find_max_min_values(self, img_as_array):
+        img_as_array= np.squeeze(img_as_array)
+        x_max = y_max = 0
+        y_min = 1000
+        y_max_set = False
+        for y in range(cfg.INPUT.IMAGE_SIZE[1]):
+            for x in range(cfg.INPUT.IMAGE_SIZE[0]):
+                if img_as_array[y][x] != 0:
+                    if x_max < x:
+                        x_max = x
+                    if not y_max_set:
+                        y_max = cfg.INPUT.IMAGE_SIZE[1] - y
+                    if y_max < y:
+                        y_max = y
+        return x_max, y_max, y_min
+        
+                    
+

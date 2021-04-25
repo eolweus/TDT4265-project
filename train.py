@@ -43,7 +43,6 @@ def do_evaluation(data, model, dice_fn):
     print('-' * 10)
     return avg_dice
 
-
 def start_train(model, train_dl, valid_dl, loss_fn, optimizer, acc_fn, epochs=1):
     model.cuda()
     
@@ -126,8 +125,6 @@ def main ():
     valid_data = DataLoader(valid_dataset, batch_size=bs, shuffle=True)
     test_data = DataLoader(tte_test_dataset, batch_size=test_bs, shuffle=True)
     tee_test_data = DataLoader(tee_test_dataset, batch_size=test_bs, shuffle=True)
-
-    # TODO: set up test set
 
     # TODO: rotation of tee is implemented in getitem, not in open_as_array
     # TODO: check if you can visualize a rotated TEE mask
