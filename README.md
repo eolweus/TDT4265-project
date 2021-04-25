@@ -117,6 +117,8 @@ The logic behind training the model such as running through epochs. This module 
 ### logs
 
  ## Model Architecture
+ All our contraction and expansion blocks uses 3x3 kernel size and padding=1, except in our first contraction block, where we use kernel size 7x7 and padding=1.
+ 
 ![0001](https://user-images.githubusercontent.com/60004726/116009313-26c88200-a619-11eb-872a-155339e159b4.jpg)
 ![0002](https://user-images.githubusercontent.com/60004726/116009316-27f9af00-a619-11eb-9f15-f7cd20a667c1.jpg)
 
