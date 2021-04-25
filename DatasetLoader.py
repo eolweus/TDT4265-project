@@ -220,11 +220,9 @@ class TEELoader(DatasetLoader):
     def open_mask(self, idx, add_dims=False):
         #open mask file
         raw_mask = np.array((cv2.imread(self.files[idx]['gt'], cv2.IMREAD_GRAYSCALE)))
-        # raw_mask = np.array(Image.open(self.files[idx]['gt']))
         raw_mask = cv2.resize(raw_mask, dsize=(self.img_size, self.img_size))
 
         # print(np.unique(raw_mask, return_counts = True))
-        # TODO: check if this works, im not sure if it does
         raw_mask = np.where(raw_mask>100, raw_mask, 0)
         raw_mask = np.where(raw_mask>200, 2, raw_mask)
         raw_mask = np.where(raw_mask>100, 1, raw_mask)
@@ -232,13 +230,14 @@ class TEELoader(DatasetLoader):
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 
     def __getitem__(self, idx):
-        #get the image and mask as arrays
+        # Get the image and mask as arrays
         if cfg.TESTING.CROP_TEE:
             img_as_array, mask_as_array = self.remove_image_borders(idx)
         else:
             img_as_array = self.open_as_array(idx, invert=self.pytorch)
             mask_as_array = self.open_mask(idx, add_dims=False)
 
+        # Rotate TEE image 90 degrees
         img_as_array, mask_as_array = self.augmenter.rotate_image90(image=img_as_array, mask=mask_as_array)
 
         if self.use_transforms:
@@ -256,7 +255,6 @@ class TEELoader(DatasetLoader):
 
         x_max, y_max, y_min = self.find_max_min_values(img_as_array)
         min_maxes = (0, y_min, x_max, y_max)
-        # print(min_maxes)
         img, mask = self.augmenter.crop_and_resize(img_as_array, mask_as_array, min_maxes)
         return img, mask
 
@@ -277,4 +275,3 @@ class TEELoader(DatasetLoader):
         return x_max, y_max, y_min
         
                     
-

@@ -8,10 +8,7 @@ class Augmenter():
     def __init__(self):
         self.transform = A.Compose(
             [   
-                # A.CenterCrop(100, 100),
                 A.RandomResizedCrop(*cfg.INPUT.IMAGE_SIZE, scale=(0.2, 1.0), p=1.0),
-                # A.RandomResizedCrop(*cfg.INPUT.IMAGE_SIZE, scale=(0.2, 1.0), p=0.5),
-                # A.Rotate(limit=40, p=0.9, border_mode=cv2.BORDER_CONSTANT),
                 A.OneOf([
                     A.GaussianBlur(p=0.5),
                     A.Blur(p=0.5)
@@ -75,3 +72,4 @@ class Augmenter():
         aug_image = augmentations["image"]
         aug_mask = augmentations["mask"]
         return aug_image, aug_mask
+        
