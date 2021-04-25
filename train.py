@@ -37,7 +37,7 @@ def do_evaluation(data, model, dice_fn):
         outputs = model(x)
         Dice, dice_per_class = dice_fn(outputs, y)
         running_dice  += Dice*data.batch_size
-        running_dice_per_class  += dice_per_class*data.batch_size
+        running_dice_per_class  += dice_per_class*x.shape[0]
     avg_dice = running_dice / len(data.dataset)
     avg_dice_per_class = running_dice_per_class / len(data.dataset)
     print("Run results")
@@ -52,7 +52,7 @@ def start_train(model, train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, 
     
     ### Setup for checkpointing
     logger = logging.getLogger('U.trainer')
-    arguments = {"epoch": 0, "step": 0, "train_loss": [], "valid_loss": [], 'valid_dice': [],'valid_dice_per_class':[], 'pixel_acc': []}
+    arguments = {"epoch": 0, "step": 0, "train_loss": [], "valid_loss": [], 'valid_dice': [],'valid_dice_per_class':np.array([]), 'pixel_acc': []}
     save_to_disk = True
     checkpointer = CheckPointer(
         model, optimizer, save_to_disk, logger
@@ -62,8 +62,8 @@ def start_train(model, train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, 
         arguments.update(extra_checkpoint_data) 
     
     # The trainer has been moved to trainer.py
-    train_loss, valid_loss, valid_dice, pixel_acc = do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epochs, checkpointer, arguments)
-    return train_loss, valid_loss, valid_dice, pixel_acc
+    train_loss, valid_loss, valid_dice, valid_dice_per_class, pixel_acc = do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epochs, checkpointer, arguments)
+    return train_loss, valid_loss, valid_dice, valid_dice_per_class, pixel_acc
 
 def evauate_and_log_results(logger, unet, tte_test_data, tee_test_data):
     # image = reader.Execute();
@@ -149,7 +149,7 @@ def main ():
     opt = torch.optim.Adam(unet.parameters(), lr=lr)
 
     #do some training 
-    train_loss, valid_loss, valid_dice, pixel_acc = start_train(unet, train_data, valid_data, loss_fn, opt, dice_multiclass, acc_metric, epochs=epochs)
+    train_loss, valid_loss, valid_dice, valid_dice_per_class, pixel_acc = start_train(unet, train_data, valid_data, loss_fn, opt, dice_multiclass, acc_metric, epochs=epochs)
     
     # Evaluate networke(f)
     evauate_and_log_results(logger, unet, tte_test_data, tee_test_data)
@@ -157,6 +157,15 @@ def main ():
     # plot training and validation losses
     if cfg.TRAINING.VISUAL_DEBUG:
         plotter.plot_train_and_val_loss(train_loss, valid_loss)
+        
+    # plot validation pixel accuracy
+    if cfg.TRAINING.VISUAL_DEBUG:
+        plotter.plot_acc_history(pixel_acc)
+        
+        
+    # plot validation dice
+    if cfg.TRAINING.VISUAL_DEBUG:
+        plotter.plot_dice_history(valid_dice_per_class)
 
     # show the predicted segmentations
     if cfg.TRAINING.VISUAL_DEBUG:

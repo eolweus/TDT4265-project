@@ -79,15 +79,14 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epoc
                 mean_dice, dice_per_class = dice_fn(outputs, y)
                 acc = acc_fn(outputs, y)
                 
-                running_dice  += mean_dice*dataloader.batch_size
-                running_dice_per_class += dice_per_class*dataloader.batch_size
-                running_loss += loss*dataloader.batch_size 
-                running_acc  += acc*dataloader.batch_size
+                running_dice  += mean_dice*x.shape[0]
+                running_dice_per_class += dice_per_class*x.shape[0]
+                running_loss += loss*x.shape[0]
+                running_acc  += acc*x.shape[0]
                 
                 batch_time = time.time() - end
                 end = time.time()
                     
-                
 
             epoch_loss = running_loss / len(dataloader.dataset)
             epoch_dice = running_dice / len(dataloader.dataset)
@@ -102,6 +101,7 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epoc
             train_loss.append(epoch_loss) if phase=='train' else valid_loss.append(epoch_loss)
             if phase=='valid':
                 valid_dice.append(epoch_dice)
+                valid_dice_per_class = np.append(valid_dice_per_class, epoch_dice_per_class.numpy())
                 pixel_acc.append(epoch_acc)
                 arguments["train_loss"] = train_loss
                 arguments["valid_loss"] = valid_loss
@@ -119,7 +119,7 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epoc
                     print("Early stopping at epoch", epoch)
                     time_elapsed = time.time() - start_training_time
                     print('Time elapsed: {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)) 
-                    return train_loss, valid_loss, valid_dice, pixel_acc  
+                    return train_loss, valid_loss, valid_dice, valid_dice_per_class, pixel_acc  
 
                 es_stop_counter += 1
 
@@ -137,4 +137,4 @@ def do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epoc
     total_training_time = int(time.time() - start_training_time)
     total_time_str = str(datetime.timedelta(seconds=total_training_time))
     logger.info("Total training time: {} ({:.4f} s / it)".format(total_time_str, total_training_time / epochs))
-    return train_loss, valid_loss, valid_dice, pixel_acc    
+    return train_loss, valid_loss, valid_dice, valid_dice_per_class, pixel_acc    

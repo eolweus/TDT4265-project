@@ -10,7 +10,7 @@ def dice_score(predb, yb):
     return (2 * intersection) / (predflat.sum() + yflat.sum())
 
 def acc_metric(predb, yb):
-    return (predb.argmax(dim=1) == to_cuda(yb)).float().mean()
+    return (predb.argmax(dim=1) == yb.cuda()).float().mean()
 
 def dice_multiclass(predb, yb, smooth=1e-7):
     num_classes = predb.shape[1]
