@@ -22,6 +22,12 @@ class Augmenter():
                 A.Rotate(limit=[90,90], border_mode=cv2.BORDER_CONSTANT, p=1.0)
             ]
         )
+
+        self.rotate_TEE180 = A.Compose(
+            [
+                A.Rotate(limit=(180,180), border_mode=cv2.BORDER_CONSTANT, p=1.0)
+            ]
+        )
         
         self.transformations = {
             "Transform": self.transform,
@@ -31,14 +37,15 @@ class Augmenter():
             "RGB_shift": A.RGBShift(r_shift_limit=25, b_shift_limit=25, g_shift_limit=25, p=0.7)
         }
 
-    def augment_image(self, image, mask):
-        augmentations = self.transform(image=image, mask=mask)
+    def rotate_image(self, image, mask, degrees=180):
+        transform = A.Rotate(limit=(degrees, degrees), border_mode=cv2.BORDER_CONSTANT, p=1.0)
+        augmentations = transform(image=image, mask=mask)
         aug_image = augmentations["image"]
         aug_mask = augmentations["mask"]
         return aug_image, aug_mask
-
-    def rotate_image90(self, image, mask):
-        augmentations = self.rotate_TEE(image=image, mask=image)
+    
+    def rotate_image180(self, image, mask):
+        augmentations = self.rotate_TEE180(image=image, mask=mask)
         aug_image = augmentations["image"]
         aug_mask = augmentations["mask"]
         return aug_image, aug_mask

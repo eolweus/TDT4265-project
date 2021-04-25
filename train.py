@@ -47,7 +47,6 @@ def do_evaluation(data, model, dice_fn):
     print('-' * 10)
     return avg_dice
 
-
 def start_train(model, train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epochs=1):
     model.cuda()
     
@@ -67,6 +66,20 @@ def start_train(model, train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, 
     # The training logic has been moved to trainer.py
     train_loss, valid_loss, valid_dice, valid_dice_per_class, pixel_acc = do_train(model,train_dl, valid_dl, loss_fn, optimizer, dice_fn, acc_fn, epochs, checkpointer, arguments)
     return train_loss, valid_loss, valid_dice, valid_dice_per_class, pixel_acc
+
+def run_test(model, optimizer, tee_test_dataloader, bs=cfg.SOLVER.TEST_BATCH_SIZE):
+    # arguments = {"epoch": 0, "step": 0, "train_loss": [], "valid_loss": [], 'valid_dice': [],'valid_dice_per_class':np.array([]), 'pixel_acc': []}
+    # save_to_disk = True
+    model.cuda()
+    logger = logging.getLogger('U.trainer')
+    model.train(False)
+    checkpointer = CheckPointer(
+        model, optimizer, False, logger
+    )
+    if cfg.TRAINING.USE_CHECKPOINT:
+        extra_checkpoint_data = checkpointer.load() # Load last checkpoint
+        # arguments.update(extra_checkpoint_data)
+    plotter.predict_on_batch_and_plot(tee_test_dataloader, model, bs)
 
 def evauate_and_log_results(logger, unet, tte_test_data, tee_test_data):
     # image = reader.Execute();
@@ -171,8 +184,13 @@ def main ():
     loss_fn = nn.CrossEntropyLoss()
     opt = torch.optim.Adam(unet.parameters(), lr=lr)
 
-    #do some training 
-    train_loss, valid_loss, valid_dice, valid_dice_per_class, pixel_acc = start_train(unet, train_data, valid_data, loss_fn, opt, dice_multiclass, acc_metric, epochs=epochs)
+    #do some training
+    if cfg.TESTING.TEST_ONLY:
+        run_test(unet, opt, tee_test_data)
+        evauate_and_log_results(logger, unet, tte_test_data, tee_test_data)
+        return
+    else:
+        train_loss, valid_loss, valid_dice, valid_dice_per_class, pixel_acc = start_train(unet, train_data, valid_data, loss_fn, opt, dice_multiclass, acc_metric, epochs=epochs)
     
     # Evaluate network(f)
     evauate_and_log_results(logger, unet, tte_test_data, tee_test_data)

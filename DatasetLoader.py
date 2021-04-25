@@ -50,11 +50,14 @@ class DatasetLoader(Dataset):
     
     def __getitem__(self, idx):
         #get the image and mask as arrays
-        img_as_array = self.open_as_array(idx, invert=self.pytorch)
+        img_as_array = self.open_as_array(idx)
         mask_as_array = self.open_mask(idx, add_dims=False)
 
         if self.use_transforms:
-            img_as_array, mask_as_array = self.augmenter.augment_image(image=img_as_array, mask=mask_as_array)
+            img_as_array, mask_as_array = self.augmenter.transform_image(image=img_as_array, mask=mask_as_array, transform=cfg.TRAINING.TRANSFORM)
+
+        if self.pytorch:
+            img_as_array = img_as_array.transpose((2,0,1))
 
         # squeeze makes sure we get the right shape for the mask
         x = torch.tensor(img_as_array, dtype=torch.float32)
@@ -101,10 +104,6 @@ class ResizedLoader(DatasetLoader):
         raw_us = np.stack([np.array(Image.open(self.files[idx]['gray'])),
                            ], axis=2)
     
-        if invert:
-            raw_us = raw_us.transpose((2,0,1))
-    
-        # normalize
         return (raw_us / np.iinfo(raw_us.dtype).max)
 
     def open_mask(self, idx, add_dims=False):
@@ -117,7 +116,6 @@ class ResizedLoader(DatasetLoader):
 
 class TTELoader(DatasetLoader):
     def __init__(self, data_dir, use_transforms=False, pytorch=True):
-        # self.img_size = 384 # må gjøre dette dynamisk
         self.img_size = cfg.INPUT.IMAGE_SIZE
         super().__init__(data_dir, use_transforms=use_transforms)    
  
@@ -152,7 +150,6 @@ class TTELoader(DatasetLoader):
                 'gray': gt_path.replace("_gt", "")}
         return files
 
-    # TODO: make sure all the images are of equal size
     def open_as_array(self, idx, invert=False):
         raw_us = np.array(self.load_itk(self.files[idx]['gray']))
         raw_us = cv2.resize(raw_us, dsize=self.img_size)
@@ -164,14 +161,12 @@ class TTELoader(DatasetLoader):
         # normalize
         return (raw_us / np.iinfo(raw_us.dtype).max)
 
-    # TODO: edit this to fit tte
     def open_mask(self, idx, add_dims=False):
         #open mask file
         raw_mask = np.array((self.load_itk(self.files[idx]['gt'])))
         raw_mask = cv2.resize(raw_mask, dsize=self.img_size)
         # raw_mask = np.where(raw_mask>100, 1, 0)
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
-
 
     def load_itk(self, filename):
         # Reads the image using SimpleITK
@@ -211,10 +206,6 @@ class TEELoader(DatasetLoader):
         raw_us = cv2.resize(raw_us, dsize=(self.img_size, self.img_size))
         raw_us = np.stack([raw_us], axis=2)
         
-        if invert:
-            raw_us = raw_us.transpose((2,0,1))
-    
-        # normalize
         return (raw_us / np.iinfo(raw_us.dtype).max)
 
     def open_mask(self, idx, add_dims=False):
@@ -224,38 +215,44 @@ class TEELoader(DatasetLoader):
 
         # print(np.unique(raw_mask, return_counts = True))
         raw_mask = np.where(raw_mask>100, raw_mask, 0)
-        raw_mask = np.where(raw_mask>200, 2, raw_mask)
-        raw_mask = np.where(raw_mask>100, 1, raw_mask)
+        raw_mask = np.where(raw_mask>200, 1, raw_mask)
+        raw_mask = np.where(raw_mask>100, 2, raw_mask)
         
         return np.expand_dims(raw_mask, 0) if add_dims else raw_mask
 
     def __getitem__(self, idx):
         # Get the image and mask as arrays
         if cfg.TESTING.CROP_TEE:
-            img_as_array, mask_as_array = self.remove_image_borders(idx)
+            img_as_array, mask_as_array = self.remove_image_borders(idx, invert=self.pytorch)
         else:
-            img_as_array = self.open_as_array(idx, invert=self.pytorch)
+            img_as_array = self.open_as_array(idx)
             mask_as_array = self.open_mask(idx, add_dims=False)
 
-        # Rotate TEE image 90 degrees
-        img_as_array, mask_as_array = self.augmenter.rotate_image90(image=img_as_array, mask=mask_as_array)
+        # Rotate TEE image 180 degrees
+        img_as_array, mask_as_array = self.augmenter.rotate_image(image=img_as_array, mask=mask_as_array, degrees=90)
+        
+        if self.pytorch:
+            img_as_array = img_as_array.transpose((2,0,1))
+
+        mask_as_array = np.squeeze(mask_as_array)
+        
 
         if self.use_transforms:
-            img_as_array, mask_as_array = self.augmenter.augment_image(image=img_as_array, mask=mask_as_array)
+            img_as_array, mask_as_array = self.augmenter.transform_image(image=img_as_array, mask=mask_as_array, transform=cfg.TRAINING.TRANSFORM)
 
         x = torch.tensor(img_as_array, dtype=torch.float32)
-        # squeeze makes sure we get the right shape for the mask
-        y = torch.tensor(np.squeeze(mask_as_array), dtype=torch.torch.int64)
+        y = torch.tensor(mask_as_array, dtype=torch.torch.int64)
 
         return x, y
     
-    def remove_image_borders(self, idx):
+    def remove_image_borders(self, idx, invert=False):
         img_as_array = self.open_as_array(idx)
         mask_as_array = self.open_mask(idx, add_dims=False)
 
         x_max, y_max, y_min = self.find_max_min_values(img_as_array)
         min_maxes = (0, y_min, x_max, y_max)
         img, mask = self.augmenter.crop_and_resize(img_as_array, mask_as_array, min_maxes)
+        
         return img, mask
 
     def find_max_min_values(self, img_as_array):

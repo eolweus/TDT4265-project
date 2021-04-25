@@ -42,6 +42,7 @@ cfg.TRAINING.EPOCHS = 50
 cfg.TRAINING.USE_CHECKPOINT = False
 cfg.TRAINING.EARLY_STOP_COUNT = 5
 cfg.TRAINING.USE_TRANSFORMS = False
+cfg.TRAINING.TRANSFORM = "Gaussian_blur"
 
 # -----------------------------------------------------------------------------
 # TESTING
@@ -49,10 +50,11 @@ cfg.TRAINING.USE_TRANSFORMS = False
 cfg.TESTING = CN()
 
 cfg.TESTING.CROP_TEE = False
+cfg.TESTING.TEST_ONLY = False
 
 # ------------------------------------------------------------
 
 cfg.DATASET = "TTE"
 
-cfg.OUTPUT_DIR = "./outputs"
-cfg.LOG_DIR = "./logs"
+cfg.OUTPUT_DIR = "./outputs/TTE"
+cfg.LOG_DIR = "./logs/TTE"
