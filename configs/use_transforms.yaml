@@ -1,0 +1,10 @@
+TRAINING:
+    EARLY_STOP_COUNT: 4
+    USE_TRANSFORMS: TRUE
+SOLVER:
+    TEST_BATCH_SIZE: 10
+    BATCH_SIZE: 10
+TESTING:
+    CROP_TEE: True
+OUTPUT_DIR: "./outputs/g_blur"
+LOG_DIR: "./logs/g_blur"
