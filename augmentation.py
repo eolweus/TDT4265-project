@@ -8,53 +8,21 @@ class Augmenter():
     def __init__(self):
         self.transform = A.Compose(
             [   
-                A.RandomResizedCrop(*cfg.INPUT.IMAGE_SIZE, scale=(0.2, 1.0), p=1.0),
-                A.OneOf([
-                    A.GaussianBlur(p=0.5),
-                    A.Blur(p=0.5)
-                ], p=0.5)
+                A.RandomResizedCrop(*cfg.INPUT.IMAGE_SIZE, scale=(0.3, 1.0), p=8.0),
+                A.Rotate(limit=30, border_mode=cv2.BORDER_CONSTANT, p=0.8),
+                A.GaussianBlur(p=8.0)
             ] 
-        )
-
-        # TODO: check if this is the right rotation
-        self.rotate_TEE = A.Compose(
-            [
-                A.Rotate(limit=[90,90], border_mode=cv2.BORDER_CONSTANT, p=1.0)
-            ]
-        )
-
-        self.rotate_TEE180 = A.Compose(
-            [
-                A.Rotate(limit=(180,180), border_mode=cv2.BORDER_CONSTANT, p=1.0)
-            ]
         )
         
         self.transformations = {
             "Transform": self.transform,
-            "Rotate90": self.rotate_TEE,
             "Gaussian_blur": A.GaussianBlur(p=1.0),
             "Blur": A.Blur(p=1.0),
-            "RGB_shift": A.RGBShift(r_shift_limit=25, b_shift_limit=25, g_shift_limit=25, p=0.7)
         }
 
     def rotate_image(self, image, mask, degrees=180):
         transform = A.Rotate(limit=(degrees, degrees), border_mode=cv2.BORDER_CONSTANT, p=1.0)
         augmentations = transform(image=image, mask=mask)
-        aug_image = augmentations["image"]
-        aug_mask = augmentations["mask"]
-        return aug_image, aug_mask
-    
-    def rotate_image180(self, image, mask):
-        augmentations = self.rotate_TEE180(image=image, mask=mask)
-        aug_image = augmentations["image"]
-        aug_mask = augmentations["mask"]
-        return aug_image, aug_mask
-
-    def blur(self, image, mask, gaussian_blur=True):
-        if gaussian_blur:
-            augmentations = A.GaussianBlur(p=1.0)
-        else:
-            augmentations = A.Blur(p=1.0)
         aug_image = augmentations["image"]
         aug_mask = augmentations["mask"]
         return aug_image, aug_mask
