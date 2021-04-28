@@ -1,7 +1,7 @@
 # TDT4265-project
 The repository for the project in TDT4265 the spring of 2021 by group 3
 
-# Datasyn Final Project
+# Computer vision Final Project
 
 This Project has been developed by:
 ```
@@ -70,9 +70,9 @@ conda install --name myenv --file requirements.txt in order to install all requi
 ### Setup
 in order for the program to find the datafiles create a .env file with the paths to the data:
 e.g : 
-    TTE_BASE_PATH = "Data/training"
-    TTE_FULL_BASE_PATH = "Data/training"
-    TTE_FULL_TEST_BASE_PATH = "Data/testing"
+    TTE_BASE_PATH = "Data/CAMUS_resized/training"
+    TTE_FULL_BASE_PATH = "Data/CAMUS/training"
+    TTE_FULL_TEST_BASE_PATH = "Data/CAMUS/testing"
     TEE_BASE_PATH = "Data/DataTEEGroundTruth"
 The folder the path is pointing to should contain 1 folder for each patient containing all of the images.
 The testing folder contains medical images from patient 401-450. 
