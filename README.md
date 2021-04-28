@@ -6,7 +6,7 @@ The repository for the project in TDT4265 the spring of 2021 by group 3
 This Project has been developed by:
 ```
 Gulleik L Olsen         gulleik@hotmail.com           Software Engineer
-Erling Olweus           erling.olweus@gmail.com       Software Engineer
+Erling Olweus           erlingolweus@gmail.com       Software Engineer
 Fredrik Gran-Jansen     fredrik.granjansen@gmail.com  Software Engineer
 ```
 
